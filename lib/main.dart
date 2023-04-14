@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/core/services/drug_service.dart';
+import 'package:flutter_drug_registry/core/services/pharmacy_service.dart';
 import 'package:get_it/get_it.dart';
 
 void main() {
   GetIt.I.registerLazySingleton<DrugService>(() => DrugService());
+  GetIt.I.registerLazySingleton<PharmacyService>(() => PharmacyService());
+
   runApp(const MyApp());
 }
 
