@@ -1,0 +1,19 @@
+import 'dart:convert';
+
+import 'package:flutter_drug_registry/core/extensions/response_extensions.dart';
+import 'package:http/http.dart' as http;
+
+import '../../constants.dart';
+import '../models/drug.dart';
+import '../models/paged_result.dart';
+
+class DrugService {
+  Future<PagedResult<Drug>> searchDrugs(String query, {int page = 0, int size = 10}) async {
+    final queryParameters = {'query': query, 'page': page.toString(), 'size': size.toString()};
+    final url = Uri.https(Constants.baseApiUrl, 'api/drugs/search', queryParameters);
+    final response = await http.get(url);
+    response.ensureSuccessStatusCode();
+    final json = jsonDecode(response.body);
+    return PagedResult<Drug>.fromJson(json);
+  }
+}
