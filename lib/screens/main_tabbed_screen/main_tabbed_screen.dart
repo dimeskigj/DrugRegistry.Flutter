@@ -29,7 +29,8 @@ class MainTabbedScreen extends StatelessWidget {
             onTap: (index) => context.read<MainTabbedScreenViewModel>().changeScreen(index),
             selectedItemColor: Theme.of(context).primaryColor,
             unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.4),
-            duration: const Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOutCubic,
             items: [
               SalomonBottomBarItem(
                   icon: const FaIcon(
@@ -50,8 +51,8 @@ class MainTabbedScreen extends StatelessWidget {
                   ),
                   title: const Text('Зачувани')),
               SalomonBottomBarItem(
-                  icon: const FaIcon(
-                    FontAwesomeIcons.gear,
+                  icon: const Icon(
+                    Icons.settings,
                     size: 32,
                   ),
                   title: const Text('Поставки')),
