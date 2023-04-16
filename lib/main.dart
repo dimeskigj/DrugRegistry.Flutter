@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/core/services/drug_service.dart';
 import 'package:flutter_drug_registry/core/services/location_service.dart';
 import 'package:flutter_drug_registry/core/services/pharmacy_service.dart';
+import 'package:flutter_drug_registry/screens/main_tabbed_screen/main_tabbed_screen.dart';
 import 'package:flutter_drug_registry/themes/light_theme.dart';
 import 'package:get_it/get_it.dart';
 
@@ -22,9 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: lightTheme,
-      home: const Center(
-        child: Text("Hello World!"),
-      ),
+      home: const MainTabbedScreen(),
     );
   }
 }

@@ -7,10 +7,8 @@ class PharmacySearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).primaryColor,
-      child: const Expanded(
-        child: Center(
-          child: Text('Pharmacy Search Screen'),
-        ),
+        child: const Center(
+        child: Text('Pharmacy Search Screen'),
       ),
     );
   }
