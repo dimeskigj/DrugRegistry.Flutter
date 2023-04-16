@@ -4,7 +4,7 @@ const _primaryColor = Color(0xFF0D98BA);
 const _secondaryColor = Color(0xFF0D42BA);
 const _backgroundColor = Color(0xFFFFFFFF);
 const _scaffoldBackgroundColor = Color(0xFFF2F2F2);
-const _errorColor = Color(0xFFB00020);
+const _errorColor = Color(0xFFBA2F0D);
 const _textColor = Color(0xFF0D0D0D);
 const _secondaryTextColor = Color(0xFF757575);
 
