@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/screens/view_model_base.dart';
 
-class MainTabbedScreenViewModel extends ChangeNotifier {
+class MainTabbedScreenViewModel extends ViewModelBase {
   int _currentScreenIndex = 0;
 
   int get currentScreenIndex => _currentScreenIndex;

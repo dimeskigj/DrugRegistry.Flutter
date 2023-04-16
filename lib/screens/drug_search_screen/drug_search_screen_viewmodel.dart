@@ -1,3 +1,3 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/screens/view_model_base.dart';
 
-class DrugSearchScreenViewModel extends ChangeNotifier {}
+class DrugSearchScreenViewModel extends ViewModelBase {}
