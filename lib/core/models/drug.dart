@@ -6,6 +6,7 @@ part 'drug.g.dart';
 
 @JsonSerializable()
 class Drug {
+  final String id;
   final String? decisionNumber;
   final String? atc;
   final String? latinName;
@@ -26,7 +27,7 @@ class Drug {
   final double? priceWithoutVat;
   final DateTime? lastUpdate;
 
-  Drug({
+  Drug(this.id, {
     this.decisionNumber,
     this.atc,
     this.latinName,

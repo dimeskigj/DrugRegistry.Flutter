@@ -7,6 +7,7 @@ part of 'drug.dart';
 // **************************************************************************
 
 Drug _$DrugFromJson(Map<String, dynamic> json) => Drug(
+      json['id'] as String,
       decisionNumber: json['decisionNumber'] as String?,
       atc: json['atc'] as String?,
       latinName: json['latinName'] as String?,
@@ -40,6 +41,7 @@ Drug _$DrugFromJson(Map<String, dynamic> json) => Drug(
     );
 
 Map<String, dynamic> _$DrugToJson(Drug instance) => <String, dynamic>{
+      'id': instance.id,
       'decisionNumber': instance.decisionNumber,
       'atc': instance.atc,
       'latinName': instance.latinName,

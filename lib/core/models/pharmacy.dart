@@ -6,6 +6,7 @@ part 'pharmacy.g.dart';
 
 @JsonSerializable()
 class Pharmacy {
+  final String id;
   final String? idNumber;
   final String? taxNumber;
   final String? code;
@@ -26,7 +27,7 @@ class Pharmacy {
   final Uri? url;
   final DateTime? lastUpdate;
 
-  Pharmacy({
+  Pharmacy(this.id, {
     this.idNumber,
     this.taxNumber,
     this.code,
