@@ -3,6 +3,8 @@ import 'package:flutter_drug_registry/screens/drug_search_screen/drug_search_scr
 import 'package:flutter_drug_registry/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/drug_card.dart';
+
 class DrugSearchScreen extends StatelessWidget {
   const DrugSearchScreen({super.key});
 
@@ -13,11 +15,8 @@ class DrugSearchScreen extends StatelessWidget {
       child: Builder(
         builder: (context) => Scaffold(
           body: Stack(alignment: AlignmentDirectional.topCenter, children: [
-            Container(
-              color: Theme.of(context).primaryColor,
-              child: const Center(
-                child: Text('Drug Search Screen'),
-              ),
+            ListView(
+              children: [...context.watch<DrugSearchScreenViewModel>().searchResults.map((d) => DrugCard(drug: d))],
             ),
             SearchBar(
               textEditingController: context.read<DrugSearchScreenViewModel>().textEditingController,

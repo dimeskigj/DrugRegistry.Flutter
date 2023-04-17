@@ -11,17 +11,20 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   final DrugService _drugService = GetIt.I.get<DrugService>();
 
   final TextEditingController _textEditingController = TextEditingController();
-  final _debounceTimeDuration = const Duration(milliseconds: 2000);
-  final int _pageSize = 10;
+  final _debounceTimeDuration = const Duration(milliseconds: 500);
+  final int _pageSize = 20;
   List<Drug> _searchResults = [];
   Timer? _debounce;
   String _lastQuery = '';
   int _page = 1;
   int _total = 0;
+  bool _hasSearched = false;
 
-  get textEditingController => _textEditingController;
+  TextEditingController get textEditingController => _textEditingController;
 
-  get searchResults => _searchResults;
+  List<Drug> get searchResults => _searchResults;
+
+  bool get hasSearched => _hasSearched;
 
   @override
   void onInit() {
@@ -35,12 +38,23 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   }
 
   Future<void> searchForDrugs(String query) async {
-    if (query.length < 3) return;
-    final pagedResult = await _drugService.searchDrugs(query, size: _pageSize);
-    _lastQuery = query;
-    _page = pagedResult.page;
-    _total = pagedResult.totalCount;
-    _searchResults = pagedResult.data.toList();
+    if (query.isEmpty) {
+      _lastQuery = query;
+      _searchResults = [];
+      _page = 1;
+      _total = 0;
+    } else if (query.length >= 3) {
+      try {
+        final pagedResult = await _drugService.searchDrugs(query, size: _pageSize);
+        _hasSearched = true;
+        _lastQuery = query;
+        _page = pagedResult.page;
+        _total = pagedResult.totalCount;
+        _searchResults = pagedResult.data.toList();
+      } catch (_) {
+        // ignored...
+      }
+    }
     notifyListeners();
   }
 
