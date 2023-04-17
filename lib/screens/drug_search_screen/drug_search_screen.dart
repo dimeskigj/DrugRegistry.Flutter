@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/screens/drug_search_screen/drug_search_screen_viewmodel.dart';
+import 'package:flutter_drug_registry/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
 
 class DrugSearchScreen extends StatelessWidget {
@@ -10,11 +11,19 @@ class DrugSearchScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => DrugSearchScreenViewModel(),
       child: Builder(
-        builder: (context) => Container(
-          color: Theme.of(context).primaryColor,
-          child: const Center(
-            child: Text('Drug Search Screen'),
-          ),
+        builder: (context) => Scaffold(
+          body: Stack(alignment: AlignmentDirectional.topCenter, children: [
+            Container(
+              color: Theme.of(context).primaryColor,
+              child: const Center(
+                child: Text('Drug Search Screen'),
+              ),
+            ),
+            SearchBar(
+              textEditingController: context.read<DrugSearchScreenViewModel>().textEditingController,
+              hintText: 'Пребарувај лекови...',
+            ),
+          ]),
         ),
       ),
     );

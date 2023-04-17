@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
   final String hintText;
+  final TextEditingController textEditingController;
 
-  const SearchBar({super.key, required this.hintText});
+  const SearchBar({super.key, required this.textEditingController, this.hintText = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class SearchBar extends StatelessWidget {
           color: Colors.transparent,
           borderRadius: borderRadius,
           child: TextField(
+            controller: textEditingController,
             decoration: InputDecoration(
               suffixIcon: const Icon(Icons.search_rounded),
               hintText: hintText,
