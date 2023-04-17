@@ -13,16 +13,19 @@ class DrugSearchScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => DrugSearchScreenViewModel(),
       child: Builder(
-        builder: (context) => Scaffold(
-          body: Stack(alignment: AlignmentDirectional.topCenter, children: [
-            ListView(
-              children: [...context.watch<DrugSearchScreenViewModel>().searchResults.map((d) => DrugCard(drug: d))],
-            ),
-            SearchBar(
-              textEditingController: context.read<DrugSearchScreenViewModel>().textEditingController,
-              hintText: 'Пребарувај лекови...',
-            ),
-          ]),
+        builder: (context) => SafeArea(
+          child: Scaffold(
+            body: Stack(alignment: AlignmentDirectional.topCenter, children: [
+              ListView(
+                controller: context.read<DrugSearchScreenViewModel>().scrollController,
+                children: [...context.watch<DrugSearchScreenViewModel>().searchResults.map((d) => DrugCard(drug: d))],
+              ),
+              SearchBar(
+                textEditingController: context.read<DrugSearchScreenViewModel>().textEditingController,
+                hintText: 'Пребарувај лекови...',
+              ),
+            ]),
+          ),
         ),
       ),
     );

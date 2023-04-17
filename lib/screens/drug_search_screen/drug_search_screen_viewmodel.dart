@@ -11,20 +11,26 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   final DrugService _drugService = GetIt.I.get<DrugService>();
 
   final TextEditingController _textEditingController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   final _debounceTimeDuration = const Duration(milliseconds: 500);
-  final int _pageSize = 20;
+  final int _pageSize = 8;
   List<Drug> _searchResults = [];
   Timer? _debounce;
   String _lastQuery = '';
   int _page = 1;
   int _total = 0;
   bool _hasSearched = false;
+  bool _isLoading = false;
 
   TextEditingController get textEditingController => _textEditingController;
+
+  ScrollController get scrollController => _scrollController;
 
   List<Drug> get searchResults => _searchResults;
 
   bool get hasSearched => _hasSearched;
+
+  bool get isLoading => _isLoading;
 
   @override
   void onInit() {
@@ -35,6 +41,11 @@ class DrugSearchScreenViewModel extends ViewModelBase {
         await searchForDrugs(_textEditingController.value.text.trim());
       });
     });
+    _scrollController.addListener(() async {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent * 0.9) {
+        await loadNextPage();
+      }
+    });
   }
 
   Future<void> searchForDrugs(String query) async {
@@ -43,27 +54,39 @@ class DrugSearchScreenViewModel extends ViewModelBase {
       _searchResults = [];
       _page = 1;
       _total = 0;
-    } else if (query.length >= 3) {
+    } else if (!_isLoading && query.length >= 3) {
       try {
+        _isLoading = true;
+        notifyListeners();
         final pagedResult = await _drugService.searchDrugs(query, size: _pageSize);
         _hasSearched = true;
         _lastQuery = query;
         _page = pagedResult.page;
         _total = pagedResult.totalCount;
         _searchResults = pagedResult.data.toList();
-      } catch (_) {
+      } catch (e) {
         // ignored...
+      } finally {
+        _isLoading = false;
       }
     }
     notifyListeners();
   }
 
   Future<void> loadNextPage() async {
-    if (!hasMoreResults()) return;
-    final pagedResult = await _drugService.searchDrugs(_lastQuery, page: _page + 1, size: _pageSize);
-    _page = pagedResult.page;
-    _searchResults.addAll(pagedResult.data);
-    notifyListeners();
+    if (_isLoading || !hasMoreResults()) return;
+    try {
+      _isLoading = true;
+      notifyListeners();
+      final pagedResult = await _drugService.searchDrugs(_lastQuery, page: _page + 1, size: _pageSize);
+      _page = pagedResult.page;
+      _searchResults.addAll(pagedResult.data);
+    } catch (e) {
+      // ignored...
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   bool hasMoreResults() => _page * _pageSize < _total;
@@ -72,5 +95,6 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   void dispose() {
     super.dispose();
     _textEditingController.dispose();
+    _scrollController.dispose();
   }
 }
