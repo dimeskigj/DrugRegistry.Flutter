@@ -12,7 +12,7 @@ class SearchBar extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         child: Material(
           elevation: 0.5,
           color: Colors.transparent,

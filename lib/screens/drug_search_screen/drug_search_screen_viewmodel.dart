@@ -13,12 +13,12 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final _debounceTimeDuration = const Duration(milliseconds: 500);
-  final int _pageSize = 8;
   List<Drug> _searchResults = [];
   Timer? _debounce;
   String _lastQuery = '';
-  int _page = 1;
+  int _page = 0;
   int _total = 0;
+  int _pageSize = 8;
   bool _hasSearched = false;
   bool _isLoading = false;
 
@@ -31,6 +31,10 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   bool get hasSearched => _hasSearched;
 
   bool get isLoading => _isLoading;
+
+  bool get isAtEndOfResults => _hasSearched && !_isLoading && searchResults.isNotEmpty && !hasMoreResults();
+
+  bool get hasNoResults => _hasSearched && !_isLoading && searchResults.isEmpty;
 
   @override
   void onInit() {
@@ -54,14 +58,16 @@ class DrugSearchScreenViewModel extends ViewModelBase {
       _searchResults = [];
       _page = 1;
       _total = 0;
-    } else if (!_isLoading && query.length >= 3) {
+    } else if (query.length >= 3 && query != _lastQuery) {
       try {
         _isLoading = true;
+        _hasSearched = true;
+        _searchResults = [];
         notifyListeners();
         final pagedResult = await _drugService.searchDrugs(query, size: _pageSize);
-        _hasSearched = true;
         _lastQuery = query;
         _page = pagedResult.page;
+        _pageSize = pagedResult.size;
         _total = pagedResult.totalCount;
         _searchResults = pagedResult.data.toList();
       } catch (e) {
@@ -89,7 +95,7 @@ class DrugSearchScreenViewModel extends ViewModelBase {
     }
   }
 
-  bool hasMoreResults() => _page * _pageSize < _total;
+  bool hasMoreResults() => (_page + 1) * _pageSize < _total;
 
   @override
   void dispose() {
