@@ -55,11 +55,33 @@ class DrugSearchScreen extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.all(12),
                           child: Text(
-                            'крај на резултати',
+                            'Крај на резултати.',
                             style: Theme.of(context).textTheme.labelLarge,
                             textAlign: TextAlign.center,
                           ),
                         ),
+                      // Retry
+                      if (context.watch<DrugSearchScreenViewModel>().hasError)
+                        GestureDetector(
+                          onTap: () => context.read<DrugSearchScreenViewModel>().retry(),
+                          child: Container(
+                            margin: const EdgeInsets.all(12),
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                style: Theme.of(context).textTheme.labelLarge,
+                                children: [
+                                  const TextSpan(text: 'Се случи грешка. '),
+                                  TextSpan(
+                                    text: 'Обидете се повторно',
+                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Theme.of(context).primaryColor),
+                                  ),
+                                  const TextSpan(text: '.'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
                     ],
                   ),
                 ),

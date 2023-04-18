@@ -21,6 +21,7 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   int _pageSize = 8;
   bool _hasSearched = false;
   bool _isLoading = false;
+  bool _hasError = false;
 
   TextEditingController get textEditingController => _textEditingController;
 
@@ -34,7 +35,9 @@ class DrugSearchScreenViewModel extends ViewModelBase {
 
   bool get isAtEndOfResults => _hasSearched && !_isLoading && searchResults.isNotEmpty && !hasMoreResults();
 
-  bool get hasNoResults => _hasSearched && !_isLoading && searchResults.isEmpty;
+  bool get hasNoResults => _hasSearched && !_isLoading && searchResults.isEmpty && !_hasError;
+
+  bool get hasError => _hasError;
 
   @override
   void onInit() {
@@ -54,24 +57,26 @@ class DrugSearchScreenViewModel extends ViewModelBase {
 
   Future<void> searchForDrugs(String query) async {
     if (query.isEmpty) {
+      _hasError = false;
       _lastQuery = query;
       _searchResults = [];
       _page = 1;
       _total = 0;
-    } else if (query.length >= 3 && query != _lastQuery) {
+    } else if (query.length >= 3 && (_hasError || query != _lastQuery)) {
       try {
+        _hasError = false;
         _isLoading = true;
         _hasSearched = true;
         _searchResults = [];
+        _lastQuery = query;
         notifyListeners();
         final pagedResult = await _drugService.searchDrugs(query, size: _pageSize);
-        _lastQuery = query;
         _page = pagedResult.page;
         _pageSize = pagedResult.size;
         _total = pagedResult.totalCount;
         _searchResults = pagedResult.data.toList();
       } catch (e) {
-        // ignored...
+        _hasError = true;
       } finally {
         _isLoading = false;
       }
@@ -82,16 +87,25 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   Future<void> loadNextPage() async {
     if (_isLoading || !hasMoreResults()) return;
     try {
+      _hasError = false;
       _isLoading = true;
       notifyListeners();
       final pagedResult = await _drugService.searchDrugs(_lastQuery, page: _page + 1, size: _pageSize);
       _page = pagedResult.page;
       _searchResults.addAll(pagedResult.data);
     } catch (e) {
-      // ignored...
+      _hasError = true;
     } finally {
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  Future<void> retry() async {
+    if (_searchResults.isEmpty) {
+      await searchForDrugs(_lastQuery);
+    } else {
+      await loadNextPage();
     }
   }
 

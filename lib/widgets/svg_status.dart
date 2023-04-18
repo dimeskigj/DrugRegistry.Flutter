@@ -12,7 +12,7 @@ class SvgStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: const EdgeInsets.all(20),
+        margin: const EdgeInsets.fromLTRB(10, 100, 20, 20),
         child: Column(
           children: [
             SvgPicture.asset(
