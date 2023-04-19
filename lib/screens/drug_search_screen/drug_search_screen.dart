@@ -4,6 +4,7 @@ import 'package:flutter_drug_registry/widgets/search_bar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/diffutil_sliverlist_widget.dart';
 import '../../widgets/drug_card.dart';
 import '../../widgets/svg_status.dart';
 
@@ -30,6 +31,24 @@ class DrugSearchScreen extends StatelessWidget {
                     hintText: 'Пребарувај лекови...',
                   ),
                 ),
+                DiffUtilSliverList.fromKeyedWidgetList(
+                  children: [
+                    ...context.watch<DrugSearchScreenViewModel>().searchResults.map((d) => DrugCard(drug: d, key: Key(d.id)))
+                  ],
+                  insertAnimationDuration: const Duration(milliseconds: 250),
+                  insertAnimationBuilder: (context, animation, child) => FadeTransition(
+                    opacity: animation,
+                    child: SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, 0.2),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    ),
+                  ),
+                  removeAnimationDuration: Duration.zero,
+                  removeAnimationBuilder: (context, animation, child) => child,
+                ),
                 // Hasn't searched yet
                 if (!context.watch<DrugSearchScreenViewModel>().hasSearched)
                   const SliverToBoxAdapter(
@@ -47,16 +66,14 @@ class DrugSearchScreen extends StatelessWidget {
                       headline: 'Нема резултати од пребарувањето',
                     ),
                   ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      (context, index) => DrugCard(drug: context.read<DrugSearchScreenViewModel>().searchResults[index]),
-                      childCount: context.watch<DrugSearchScreenViewModel>().searchResults.length),
-                ),
                 // Loading indicator
                 if (context.watch<DrugSearchScreenViewModel>().isLoading)
                   SliverToBoxAdapter(
-                    child: Center(
-                      child: LoadingAnimationWidget.prograssiveDots(color: Theme.of(context).primaryColor, size: 50),
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 100),
+                      child: Center(
+                        child: LoadingAnimationWidget.prograssiveDots(color: Theme.of(context).primaryColor, size: 50),
+                      ),
                     ),
                   ),
                 // End of results
