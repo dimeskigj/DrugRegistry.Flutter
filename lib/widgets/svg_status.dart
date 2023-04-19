@@ -17,7 +17,7 @@ class SvgStatus extends StatelessWidget {
           children: [
             SvgPicture.asset(
               assetName,
-              height: 200,
+              height: 150,
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 10),

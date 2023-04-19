@@ -71,7 +71,7 @@ class SearchScrollView extends StatelessWidget {
         if (!hasSearched)
           SliverToBoxAdapter(
             child: SvgStatus(
-              assetName: 'assets/search_character.svg',
+              assetName: 'assets/magnifying-glass.svg',
               headline: 'Започнете со пребарување',
               body: hasNotSearchedYetBodyText,
             ),
@@ -80,7 +80,7 @@ class SearchScrollView extends StatelessWidget {
         if (hasNoResults)
           SliverToBoxAdapter(
             child: SvgStatus(
-              assetName: 'assets/no_results_character.svg',
+              assetName: 'assets/magnifying-glass-no-results.svg',
               headline: 'Нема резултати од пребарувањето',
               body: noResultsBodyText,
             ),
