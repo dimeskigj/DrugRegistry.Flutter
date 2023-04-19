@@ -140,7 +140,7 @@ class DiffUtilSliverListState<T> extends State<DiffUtilSliverList<T>> {
     for (var loopCount = 0; loopCount < count; loopCount++) {
       listKey.currentState!.insertItem(
         position + loopCount,
-        duration: widget.insertAnimationDuration,
+        duration: widget.insertAnimationDuration + Duration(milliseconds: 75 * loopCount),
       );
     }
     tmpList.insertAll(position, List<T?>.filled(count, null));
