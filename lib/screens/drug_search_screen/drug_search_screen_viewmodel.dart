@@ -109,6 +109,12 @@ class DrugSearchScreenViewModel extends ViewModelBase {
     }
   }
 
+  void toggleDrugBookmark(String id) {
+    final drugToBookmark = searchResults.firstWhere((element) => element.id == id);
+    drugToBookmark.isBookmarked = !drugToBookmark.isBookmarked;
+    notifyListeners();
+  }
+
   bool hasMoreResults() => (_page + 1) * _pageSize < _total;
 
   @override

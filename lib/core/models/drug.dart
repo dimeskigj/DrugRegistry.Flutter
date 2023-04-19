@@ -26,8 +26,11 @@ class Drug {
   final double? priceWithVat;
   final double? priceWithoutVat;
   final DateTime? lastUpdate;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool isBookmarked = false;
 
-  Drug(this.id, {
+  Drug(
+    this.id, {
     this.decisionNumber,
     this.atc,
     this.latinName,

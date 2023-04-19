@@ -15,7 +15,15 @@ class DrugSearchScreen extends StatelessWidget {
         builder: (context) => SafeArea(
           child: Scaffold(
             body: SearchScrollView(
-              results: [...context.watch<DrugSearchScreenViewModel>().searchResults.map((e) => DrugCard(key: Key(e.id), drug: e))],
+              results: [
+                ...context.watch<DrugSearchScreenViewModel>().searchResults.map(
+                      (e) => DrugCard(
+                        key: Key(e.id),
+                        drug: e,
+                        toggleDrugBookmark: context.read<DrugSearchScreenViewModel>().toggleDrugBookmark,
+                      ),
+                    ),
+              ],
               scrollController: context.read<DrugSearchScreenViewModel>().scrollController,
               textEditingController: context.read<DrugSearchScreenViewModel>().textEditingController,
               retryFunction: context.read<DrugSearchScreenViewModel>().retry,
