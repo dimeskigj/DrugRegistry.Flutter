@@ -15,6 +15,12 @@ void main() {
   runApp(const MyApp());
 }
 
+final Map<String, WidgetBuilder> routes = {
+  '/': (context) => const MainTabbedScreen(),
+};
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -23,7 +29,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: lightTheme,
-      home: const MainTabbedScreen(),
+      routes: routes,
+      initialRoute: '/',
+      navigatorKey: navigatorKey,
     );
   }
 }
