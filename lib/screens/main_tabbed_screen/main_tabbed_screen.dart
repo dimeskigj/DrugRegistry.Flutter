@@ -43,19 +43,19 @@ class MainTabbedScreen extends StatelessWidget {
               SalomonBottomBarItem(
                   icon: const FaIcon(
                     FontAwesomeIcons.pills,
-                    size: 32,
+                    size: 24,
                   ),
                   title: const Text('Лекови')),
               SalomonBottomBarItem(
                   icon: const FaIcon(
                     FontAwesomeIcons.hospitalUser,
-                    size: 32,
+                    size: 24,
                   ),
                   title: const Text('Аптеки')),
               SalomonBottomBarItem(
                   icon: const Icon(
                     Icons.bookmark,
-                    size: 32,
+                    size: 24,
                   ),
                   title: const Text('Зачувани')),
               SalomonBottomBarItem(

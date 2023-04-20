@@ -19,7 +19,7 @@ class DrugCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+      margin: const EdgeInsets.only(bottom: 8),
       child: InkWell(
         child: Container(
           decoration: const BoxDecoration(
