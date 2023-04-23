@@ -11,4 +11,15 @@ extension IssuingTypeExtensions on IssuingType {
         return 'H';
     }
   }
+
+  String getDetails() {
+    switch (this) {
+      case IssuingType.overTheCounter:
+        return 'Лекот може да се издава и без лекарски рецепт.';
+      case IssuingType.prescriptionOnly:
+        return 'Лекот може да се издава само со лекарски рецепт.';
+      case IssuingType.hospitalOnly:
+        return 'Лекот може да се применува само во здравствена организација.';
+    }
+  }
 }
