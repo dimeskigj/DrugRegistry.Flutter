@@ -56,14 +56,15 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   }
 
   Future<void> searchForDrugs(String query) async {
-    if (query.isEmpty) {
-      _hasError = false;
-      _lastQuery = query;
-      _searchResults = [];
-      _page = 1;
-      _total = 0;
-    } else if (query.length >= 3 && (_hasError || query != _lastQuery)) {
-      try {
+    try {
+      if (query.isEmpty) {
+        _hasSearched = false;
+        _hasError = false;
+        _lastQuery = query;
+        _searchResults = [];
+        _page = 1;
+        _total = 0;
+      } else if (query.length >= 3 && (_hasError || query != _lastQuery)) {
         _hasError = false;
         _isLoading = true;
         _hasSearched = true;
@@ -75,13 +76,13 @@ class DrugSearchScreenViewModel extends ViewModelBase {
         _pageSize = pagedResult.size;
         _total = pagedResult.totalCount;
         _searchResults = pagedResult.data.toList();
-      } catch (e) {
-        _hasError = true;
-      } finally {
-        _isLoading = false;
       }
+    } catch (e) {
+      _hasError = true;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<void> loadNextPage() async {

@@ -37,7 +37,7 @@ class DrugSearchScreen extends StatelessWidget {
           isLoading: context.watch<DrugSearchScreenViewModel>().isLoading,
           isAtEndOfResults: context.watch<DrugSearchScreenViewModel>().isAtEndOfResults,
           searchBarHintText: 'Пребарувај лекови...',
-          hasNotSearchedYetBodyText: 'Пребарувајте лекови по име, генерик или состав.',
+          hasNotSearchedYetBodyText: 'Пребарувајте лекови по име, ATC, генерик или состав.',
         ),
       ),
     );
