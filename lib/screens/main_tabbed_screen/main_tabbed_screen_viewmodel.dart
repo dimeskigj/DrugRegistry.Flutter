@@ -6,6 +6,7 @@ class MainTabbedScreenViewModel extends ViewModelBase {
   int get currentScreenIndex => _currentScreenIndex;
 
   void changeScreen(int index) {
+    if (_currentScreenIndex == index) return;
     _currentScreenIndex = index;
     notifyListeners();
   }

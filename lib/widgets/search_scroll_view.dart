@@ -8,6 +8,7 @@ import 'diffutil_sliverlist_widget.dart';
 class SearchScrollView extends StatelessWidget {
   final ScrollController scrollController;
   final TextEditingController textEditingController;
+  final FocusNode searchFocusNode;
   final bool hasSearched;
   final bool hasError;
   final bool hasNoResults;
@@ -23,6 +24,7 @@ class SearchScrollView extends StatelessWidget {
     super.key,
     required this.scrollController,
     required this.textEditingController,
+    required this.searchFocusNode,
     required this.hasSearched,
     required this.hasError,
     required this.hasNoResults,
@@ -49,6 +51,7 @@ class SearchScrollView extends StatelessWidget {
           flexibleSpace: SearchBar(
             textEditingController: textEditingController,
             hintText: searchBarHintText ?? '',
+            focusNode: searchFocusNode,
           ),
         ),
         DiffUtilSliverList.fromKeyedWidgetList(

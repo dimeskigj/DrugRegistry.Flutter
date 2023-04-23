@@ -13,7 +13,15 @@ import 'package:provider/provider.dart';
 import '../settings_screen/settings_screen.dart';
 
 class MainTabbedScreen extends StatelessWidget {
-  const MainTabbedScreen({super.key});
+  final FocusNode _drugSearchFocusNode = FocusNode();
+
+  MainTabbedScreen({super.key});
+
+  void requestFocusForIndex(int index) {
+    if (index == 0) {
+      _drugSearchFocusNode.requestFocus();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +35,27 @@ class MainTabbedScreen extends StatelessWidget {
       child: Builder(
         builder: (context) => Scaffold(
           body: [
-            const DrugSearchScreen(),
+            DrugSearchScreen(searchFocusNode: _drugSearchFocusNode),
             const PharmacySearchScreen(),
             const SavedItemsScreen(),
             const SettingsScreen(),
           ][context.watch<MainTabbedScreenViewModel>().currentScreenIndex],
           bottomNavigationBar: SalomonBottomBar(
             currentIndex: context.watch<MainTabbedScreenViewModel>().currentScreenIndex,
-            onTap: (index) => context.read<MainTabbedScreenViewModel>().changeScreen(index),
             selectedItemColor: Theme.of(context).primaryColor,
             unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.4),
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOutCubic,
+            onTap: (index) => {
+              if (index == context.read<MainTabbedScreenViewModel>().currentScreenIndex)
+                requestFocusForIndex(index)
+              else
+                context.read<MainTabbedScreenViewModel>().changeScreen(index)
+            },
+            onLongPress: (index) {
+              context.read<MainTabbedScreenViewModel>().changeScreen(index);
+              requestFocusForIndex(index);
+            },
             items: [
               SalomonBottomBarItem(
                   icon: const FaIcon(

@@ -10,6 +10,7 @@ class SalomonBottomBar extends StatelessWidget {
     this.backgroundColor,
     this.currentIndex = 0,
     this.onTap,
+    this.onLongPress,
     this.selectedItemColor,
     this.unselectedItemColor,
     this.selectedColorOpacity,
@@ -28,6 +29,9 @@ class SalomonBottomBar extends StatelessWidget {
 
   /// Returns the index of the tab that was tapped.
   final Function(int)? onTap;
+
+  /// Returns the index of the tab that was double tapped.
+  final Function(int)? onLongPress;
 
   /// The background color of the bar.
   final Color? backgroundColor;
@@ -86,6 +90,7 @@ class SalomonBottomBar extends StatelessWidget {
                     shape: itemShape,
                     child: InkWell(
                       onTap: () => onTap?.call(items.indexOf(item)),
+                      onLongPress: () => onLongPress?.call(items.indexOf(item)),
                       customBorder: itemShape,
                       focusColor: selectedColor.withOpacity(0.1),
                       highlightColor: selectedColor.withOpacity(0.1),

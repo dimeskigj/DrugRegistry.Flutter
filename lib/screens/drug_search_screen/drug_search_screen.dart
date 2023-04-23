@@ -7,17 +7,20 @@ import 'package:flutter_drug_registry/widgets/search_scroll_view.dart';
 import 'package:provider/provider.dart';
 
 class DrugSearchScreen extends StatelessWidget {
-  const DrugSearchScreen({super.key});
+  final FocusNode searchFocusNode;
+
+  const DrugSearchScreen({super.key, required this.searchFocusNode});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: SearchScrollView(
+          searchFocusNode: searchFocusNode,
           results: [
             ...context.watch<DrugSearchScreenViewModel>().searchResults.map(
                   (e) => DrugCard(
-                key: Key(e.id),
+                    key: Key(e.id),
                     drug: e,
                     toggleDrugBookmark: context.read<DrugSearchScreenViewModel>().toggleDrugBookmark,
                     navigateToDrugDetailsCallback: (drug) => navigatorKey.currentState?.push(
