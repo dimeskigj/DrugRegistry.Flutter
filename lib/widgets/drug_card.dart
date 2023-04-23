@@ -5,6 +5,7 @@ import '../core/models/drug.dart';
 import '../core/models/issuing_type.dart';
 
 typedef BookmarkCallback = void Function(String);
+typedef DrugCallback = void Function(Drug);
 
 const iconButtonScale = 0.8;
 const iconButtonIconSize = 30.0;
@@ -12,8 +13,9 @@ const iconButtonIconSize = 30.0;
 class DrugCard extends StatelessWidget {
   final Drug drug;
   final BookmarkCallback toggleDrugBookmark;
+  final DrugCallback navigateToDrugDetailsCallback;
 
-  const DrugCard({super.key, required this.drug, required this.toggleDrugBookmark});
+  const DrugCard({super.key, required this.drug, required this.toggleDrugBookmark, required this.navigateToDrugDetailsCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class DrugCard extends StatelessWidget {
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 8),
       child: InkWell(
+        onTap: () => navigateToDrugDetailsCallback(drug),
         child: Container(
           decoration: const BoxDecoration(
             border: Border.symmetric(
@@ -78,8 +81,10 @@ class DrugCard extends StatelessWidget {
                                 scale: iconButtonScale,
                                 child: IconButton(
                                   style: IconButton.styleFrom(splashFactory: InkSparkle.splashFactory),
-                                  splashColor: drug.isBookmarked ? Theme.of(context).splashColor : Colors.orangeAccent.withOpacity(0.25),
+                                  splashColor:
+                                      drug.isBookmarked ? Theme.of(context).splashColor : Colors.orangeAccent.withOpacity(0.25),
                                   onPressed: () => toggleDrugBookmark(drug.id),
+                                  tooltip: 'Зачувајте',
                                   icon: drug.isBookmarked
                                       ? const Icon(
                                           Icons.bookmark_rounded,

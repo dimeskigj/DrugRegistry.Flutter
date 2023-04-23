@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/main.dart';
+import 'package:flutter_drug_registry/screens/drug_details_screen/drug_details_screen.dart';
 import 'package:flutter_drug_registry/screens/drug_search_screen/drug_search_screen_viewmodel.dart';
 import 'package:flutter_drug_registry/widgets/drug_card.dart';
 import 'package:flutter_drug_registry/widgets/search_scroll_view.dart';
@@ -15,9 +17,14 @@ class DrugSearchScreen extends StatelessWidget {
           results: [
             ...context.watch<DrugSearchScreenViewModel>().searchResults.map(
                   (e) => DrugCard(
-                    key: Key(e.id),
+                key: Key(e.id),
                     drug: e,
                     toggleDrugBookmark: context.read<DrugSearchScreenViewModel>().toggleDrugBookmark,
+                    navigateToDrugDetailsCallback: (drug) => navigatorKey.currentState?.push(
+                      MaterialPageRoute(
+                        builder: (context) => DrugDetailsScreen(drug: drug),
+                      ),
+                    ),
                   ),
                 ),
           ],
