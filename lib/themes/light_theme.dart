@@ -20,12 +20,14 @@ final lightTheme = ThemeData(
   scaffoldBackgroundColor: _scaffoldBackgroundColor,
   colorScheme: _colorScheme,
   appBarTheme: AppBarTheme(
-    color: _primaryColor,
-    iconTheme: const IconThemeData(color: Colors.white),
+    elevation: 0,
+    scrolledUnderElevation: 0.5,
+    iconTheme: const IconThemeData(color: _textColor),
+    color: _scaffoldBackgroundColor,
     toolbarTextStyle: _baseTheme.textTheme
         .copyWith(
           titleLarge: const TextStyle(
-            color: Colors.white,
+            color: _textColor,
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
@@ -34,7 +36,7 @@ final lightTheme = ThemeData(
     titleTextStyle: _baseTheme.textTheme
         .copyWith(
           titleLarge: const TextStyle(
-            color: Colors.white,
+            color: _textColor,
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
