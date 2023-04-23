@@ -61,7 +61,7 @@ class MainTabbedScreen extends StatelessWidget {
               SalomonBottomBarItem(
                   icon: const Icon(
                     Icons.settings,
-                    size: 32,
+                    size: 24,
                   ),
                   title: const Text('Поставки')),
             ],
