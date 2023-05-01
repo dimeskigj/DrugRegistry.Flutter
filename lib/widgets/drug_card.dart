@@ -25,12 +25,6 @@ class DrugCard extends StatelessWidget {
       child: InkWell(
         onTap: () => navigateToDrugDetailsCallback(drug),
         child: Container(
-          decoration: const BoxDecoration(
-            border: Border.symmetric(
-              vertical: BorderSide.none,
-              horizontal: BorderSide(width: 0.05),
-            ),
-          ),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

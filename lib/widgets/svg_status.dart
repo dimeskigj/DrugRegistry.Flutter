@@ -17,20 +17,20 @@ class SvgStatus extends StatelessWidget {
           children: [
             SvgPicture.asset(
               assetName,
-              height: 150,
+              height: 100,
             ),
             Container(
-              margin: const EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10, top: 15),
               child: Text(
                 headline,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
             ),
             if (body != null)
               Text(
                 body!,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.labelMedium,
                 textAlign: TextAlign.center,
               ),
           ],
