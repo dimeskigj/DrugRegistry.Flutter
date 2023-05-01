@@ -114,7 +114,6 @@ class DrugDetailsScreen extends StatelessWidget {
                   margin: EdgeInsets.zero,
                   child: Material(
                     child: Container(
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
                       padding: const EdgeInsets.all(10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
