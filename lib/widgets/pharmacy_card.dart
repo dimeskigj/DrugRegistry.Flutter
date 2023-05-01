@@ -28,6 +28,7 @@ class PharmacyCard extends StatelessWidget {
     return Card(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 8),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: InkWell(
         onTap: () => navigateToPharmacyDetailsCallback(pharmacy),
         child: Container(
