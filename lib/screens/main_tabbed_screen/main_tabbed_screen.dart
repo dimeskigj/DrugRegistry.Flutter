@@ -36,7 +36,7 @@ class MainTabbedScreen extends StatelessWidget {
         builder: (context) => Scaffold(
           body: [
             DrugSearchScreen(searchFocusNode: _drugSearchFocusNode),
-            const PharmacySearchScreen(),
+            PharmacySearchScreen(),
             const SavedItemsScreen(),
             const SettingsScreen(),
           ][context.watch<MainTabbedScreenViewModel>().currentScreenIndex],
