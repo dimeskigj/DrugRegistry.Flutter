@@ -47,7 +47,7 @@ class DrugCard extends StatelessWidget {
                                 maxLines: 2,
                                 softWrap: true,
                                 overflow: TextOverflow.clip,
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               Text(
                                 drug.genericName ?? '',
