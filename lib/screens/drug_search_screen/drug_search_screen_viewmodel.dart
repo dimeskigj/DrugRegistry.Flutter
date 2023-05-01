@@ -33,11 +33,13 @@ class DrugSearchScreenViewModel extends ViewModelBase {
 
   bool get isLoading => _isLoading;
 
-  bool get isAtEndOfResults => _hasSearched && !_isLoading && searchResults.isNotEmpty && !hasMoreResults();
+  bool get isAtEndOfResults => _hasSearched && !_isLoading && searchResults.isNotEmpty && !hasMoreResults;
 
   bool get hasNoResults => _hasSearched && !_isLoading && searchResults.isEmpty && !_hasError;
 
   bool get hasError => _hasError;
+
+  bool get hasMoreResults => (_page + 1) * _pageSize < _total;
 
   @override
   void onInit() {
@@ -86,7 +88,7 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   }
 
   Future<void> loadNextPage() async {
-    if (_isLoading || !hasMoreResults()) return;
+    if (_isLoading || !hasMoreResults) return;
     try {
       _hasError = false;
       _isLoading = true;
@@ -115,8 +117,6 @@ class DrugSearchScreenViewModel extends ViewModelBase {
     drugToBookmark.isBookmarked = !drugToBookmark.isBookmarked;
     notifyListeners();
   }
-
-  bool hasMoreResults() => (_page + 1) * _pageSize < _total;
 
   @override
   void dispose() {
