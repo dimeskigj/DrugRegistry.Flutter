@@ -26,6 +26,8 @@ class Pharmacy {
   final Location? location;
   final Uri? url;
   final DateTime? lastUpdate;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool isBookmarked = false;
 
   Pharmacy(this.id, {
     this.idNumber,
