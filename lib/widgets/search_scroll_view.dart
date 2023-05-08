@@ -40,6 +40,7 @@ class SearchScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       controller: scrollController,
       slivers: [
         SliverAppBar(
