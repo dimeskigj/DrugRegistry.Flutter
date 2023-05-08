@@ -15,6 +15,9 @@ void main() async {
   GetIt.I.registerLazySingleton<SharedPreferencesService>(() => SharedPreferencesService());
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  await GetIt.I.get<SharedPreferencesService>().init();
+
   runApp(const MyApp());
 }
 

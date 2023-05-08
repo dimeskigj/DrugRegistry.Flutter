@@ -10,6 +10,7 @@ import 'package:flutter_drug_registry/widgets/salomon_bottom_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/providers/theme_provider.dart';
 import '../settings_screen/settings_screen.dart';
 
 class MainTabbedScreen extends StatelessWidget {
@@ -30,7 +31,10 @@ class MainTabbedScreen extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MainTabbedScreenViewModel()),
         ChangeNotifierProvider(create: (_) => DrugSearchScreenViewModel()),
         ChangeNotifierProvider(create: (_) => PharmacySearchScreenViewModel()),
-        ChangeNotifierProvider(create: (_) => SettingsScreenViewModel()),
+        ChangeNotifierProxyProvider<ThemeProvider, SettingsScreenViewModel>(
+          update: (_, themeProvider, previousViewModel) => SettingsScreenViewModel(themeProvider),
+          create: (context) => SettingsScreenViewModel(Provider.of<ThemeProvider>(context, listen: false)),
+        ),
       ],
       child: Builder(
         builder: (context) => Scaffold(
