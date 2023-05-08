@@ -13,7 +13,7 @@ final _baseTheme = ThemeData.dark();
 final _colorScheme = ColorScheme.fromSeed(seedColor: _primaryColor, brightness: Brightness.dark)
     .copyWith(background: _backgroundColor, error: _errorColor, secondary: _secondaryColor);
 
-final lightTheme = ThemeData(
+final darkTheme = ThemeData(
   primaryColor: _primaryColor,
   primaryColorLight: _primaryColor.withOpacity(0.8),
   primaryColorDark: _primaryColor.withOpacity(0.6),
