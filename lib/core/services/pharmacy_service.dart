@@ -32,7 +32,7 @@ class PharmacyService {
     };
     if (municipality?.isNotEmpty ?? false) queryParameters['municipality'] = municipality!;
     if (place?.isNotEmpty ?? false) queryParameters['place'] = place!;
-    final url = Uri.https(Constants.baseApiUrl, 'api/pharmacies/byLocation', queryParameters);
+    final url = Uri.https(Constants.baseApiUrl, 'api/pharmacies/by-location', queryParameters);
     final response = await http.get(url).timeout(_timeOut);
     response.ensureSuccessStatusCode();
     final json = jsonDecode(response.body);
@@ -40,7 +40,7 @@ class PharmacyService {
   }
 
   Future<Iterable<String>> getMunicipalitiesByFrequency() async {
-    final url = Uri.https(Constants.baseApiUrl, 'api/pharmacies/municipalitiesByFrequency');
+    final url = Uri.https(Constants.baseApiUrl, 'api/pharmacies/municipalities-by-frequency');
     final response = await http.get(url).timeout(_timeOut);
     response.ensureSuccessStatusCode();
     final json = jsonDecode(response.body);
@@ -49,7 +49,7 @@ class PharmacyService {
 
   Future<Iterable<String>> getPlacesByFrequency(String municipality) async {
     final queryParameters = {'municipality': municipality};
-    final url = Uri.https(Constants.baseApiUrl, 'api/pharmacies/placesByFrequency', queryParameters);
+    final url = Uri.https(Constants.baseApiUrl, 'api/pharmacies/places-by-frequency', queryParameters);
     final response = await http.get(url).timeout(_timeOut);
     response.ensureSuccessStatusCode();
     final json = jsonDecode(response.body);
