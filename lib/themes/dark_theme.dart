@@ -86,11 +86,7 @@ final darkTheme = ThemeData(
     activeTickMarkColor: _primaryColor.withOpacity(0.8),
     inactiveTickMarkColor: _primaryColor.withOpacity(0.4),
   ),
-  tabBarTheme: TabBarTheme(
-    indicator: BoxDecoration(
-      borderRadius: BorderRadius.circular(4),
-      color: _primaryColor,
-    ),
+  tabBarTheme: const TabBarTheme(
     unselectedLabelColor: _secondaryTextColor,
     labelColor: _primaryColor,
   ),
