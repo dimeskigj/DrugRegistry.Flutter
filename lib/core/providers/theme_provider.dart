@@ -10,7 +10,7 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeData get currentTheme => (_sharedPreferencesService.getIsLightTheme() ?? true) ? lightTheme : darkTheme;
 
-  setTheme(bool isLightTheme) async {
+  Future<void> setTheme(bool isLightTheme) async {
     if (_sharedPreferencesService.getIsLightTheme() == isLightTheme) return;
     await _sharedPreferencesService.setIsLightTheme(isLightTheme);
     notifyListeners();

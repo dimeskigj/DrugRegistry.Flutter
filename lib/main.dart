@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/core/providers/saved_items_provider.dart';
 import 'package:flutter_drug_registry/core/providers/theme_provider.dart';
 import 'package:flutter_drug_registry/core/services/drug_service.dart';
 import 'package:flutter_drug_registry/core/services/location_service.dart';
@@ -28,8 +29,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => SavedItemsProvider()),
+      ],
       child: Builder(
         builder: (context) => MaterialApp(
           home: MainTabbedScreen(),
