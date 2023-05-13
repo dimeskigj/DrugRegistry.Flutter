@@ -14,11 +14,17 @@ class SavedItemsProvider extends ChangeNotifier {
   List<Pharmacy> savedPharmacies = [];
 
   void appendDrugs(List<Drug> drugs) {
+    for (var drug in drugs) {
+      drug.isBookmarked = true;
+    }
     savedDrugs.addAll(drugs);
     notifyListeners();
   }
 
   void appendPharmacies(List<Pharmacy> pharmacies) {
+    for (var pharmacy in pharmacies) {
+      pharmacy.isBookmarked = true;
+    }
     savedPharmacies.addAll(pharmacies);
     notifyListeners();
   }

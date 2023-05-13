@@ -6,6 +6,7 @@ import 'package:flutter_drug_registry/screens/main_tabbed_screen/main_tabbed_scr
 import 'package:flutter_drug_registry/screens/pharmacy_search_screen/pharmacy_search_screen.dart';
 import 'package:flutter_drug_registry/screens/pharmacy_search_screen/pharmacy_search_screen_viewmodel.dart';
 import 'package:flutter_drug_registry/screens/saved_items_screen/saved_items_screen.dart';
+import 'package:flutter_drug_registry/screens/saved_items_screen/saved_items_screen_viewmodel.dart';
 import 'package:flutter_drug_registry/screens/settings_screen/settings_screen_viewmodel.dart';
 import 'package:flutter_drug_registry/widgets/salomon_bottom_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,6 +33,7 @@ class MainTabbedScreen extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MainTabbedScreenViewModel()),
         ChangeNotifierProvider(create: (_) => DrugSearchScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false))),
         ChangeNotifierProvider(create: (_) => PharmacySearchScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false))),
+        ChangeNotifierProvider(create: (_) => SavedItemsScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false))),
         ChangeNotifierProxyProvider<ThemeProvider, SettingsScreenViewModel>(
           update: (_, themeProvider, previousViewModel) => SettingsScreenViewModel(themeProvider),
           create: (context) => SettingsScreenViewModel(Provider.of<ThemeProvider>(context, listen: false)),

@@ -39,6 +39,14 @@ class PharmacyService {
     return PagedResult<Pharmacy>.fromJson(json);
   }
 
+  Future<List<Pharmacy>> getPharmaciesByIds(List<String> ids) async {
+    final url = Uri.https(Constants.baseApiUrl, 'api/pharmacies/by-ids');
+    final response = await http.post(url, headers: {'Content-Type': 'application/json'}, body: jsonEncode(ids)).timeout(_timeOut);
+    response.ensureSuccessStatusCode();
+    final json = jsonDecode(response.body) as List<dynamic>;
+    return json.map((pharmacyJson) => Pharmacy.fromJson(pharmacyJson)).toList();
+  }
+
   Future<Iterable<String>> getMunicipalitiesByFrequency() async {
     final url = Uri.https(Constants.baseApiUrl, 'api/pharmacies/municipalities-by-frequency');
     final response = await http.get(url).timeout(_timeOut);

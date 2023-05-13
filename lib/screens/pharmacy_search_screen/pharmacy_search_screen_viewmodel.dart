@@ -147,7 +147,7 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
 
   void togglePharmacyBookmark(String id) {
     final pharmacyToBookmark = searchResults.firstWhere((element) => element.id == id);
-    
+
     if (!pharmacyToBookmark.isBookmarked) {
       _savedItemsProvider.addPharmacy(pharmacyToBookmark);
     } else {

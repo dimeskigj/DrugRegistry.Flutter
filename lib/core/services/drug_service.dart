@@ -9,7 +9,7 @@ import '../models/paged_result.dart';
 
 class DrugService {
   final Duration _timeOut = const Duration(seconds: 10);
-  
+
   Future<PagedResult<Drug>> searchDrugs(String query, {int page = 0, int size = 10}) async {
     final queryParameters = {'query': query, 'page': page.toString(), 'size': size.toString()};
     final url = Uri.https(Constants.baseApiUrl, 'api/drugs/search', queryParameters);
@@ -17,5 +17,13 @@ class DrugService {
     response.ensureSuccessStatusCode();
     final json = jsonDecode(response.body);
     return PagedResult<Drug>.fromJson(json);
+  }
+
+  Future<List<Drug>> getDrugsByIds(List<String> ids) async {
+    final url = Uri.https(Constants.baseApiUrl, 'api/drugs/by-ids');
+    final response = await http.post(url, headers: {'Content-Type': 'application/json'}, body: jsonEncode(ids)).timeout(_timeOut);
+    response.ensureSuccessStatusCode();
+    final json = jsonDecode(response.body) as List<dynamic>;
+    return json.map((drugJson) => Drug.fromJson(drugJson)).toList();
   }
 }
