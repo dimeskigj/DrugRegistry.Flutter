@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/core/models/bookmark_type.dart';
 import 'package:flutter_drug_registry/core/providers/saved_items_provider.dart';
 import 'package:flutter_drug_registry/screens/saved_items_screen/saved_items_screen_viewmodel.dart';
 import 'package:flutter_drug_registry/widgets/drug_card.dart';
@@ -59,10 +60,23 @@ class SavedItemsScreen extends StatelessWidget {
                   Center(
                     child: LoadingAnimationWidget.prograssiveDots(color: Theme.of(context).primaryColor, size: 50),
                   ),
+                if (context.watch<SavedItemsScreenViewModel>().hasNoSavedDrugs)
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 50),
+                      child: Column(
+                        children: [
+                          Container(margin: const EdgeInsets.only(bottom: 10), child: const Icon(Icons.bookmark_rounded)),
+                          const Text('Немаш зачувани лекови.'),
+                        ],
+                      ),
+                    ),
+                  ),
                 ...context.watch<SavedItemsProvider>().savedDrugs.map(
                       (drug) => DrugCard(
                         drug: drug,
-                        toggleDrugBookmark: (_) {},
+                        toggleDrugBookmark: (id) =>
+                            context.read<SavedItemsScreenViewModel>().removeBookmark(id, BookmarkType.drugBookmark),
                         navigateToDrugDetailsCallback: (drug) => navigatorKey.currentState?.push(
                           MaterialPageRoute(
                             builder: (context) => DrugDetailsScreen(drug: drug),
@@ -79,10 +93,25 @@ class SavedItemsScreen extends StatelessWidget {
                   Center(
                     child: LoadingAnimationWidget.prograssiveDots(color: Theme.of(context).primaryColor, size: 50),
                   ),
+                if (context.watch<SavedItemsScreenViewModel>().hasNoSavedPharmacies)
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 50),
+                      child: Column(
+                        children: [
+                          Container(margin: const EdgeInsets.only(bottom: 10), child: const Icon(Icons.bookmark_rounded)),
+                          const Text(
+                            'Немаш зачувани аптеки.',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ...context.watch<SavedItemsProvider>().savedPharmacies.map(
                       (pharmacy) => PharmacyCard(
                         pharmacy: pharmacy,
-                        togglePharmacyBookmark: (_) {},
+                        togglePharmacyBookmark: (id) =>
+                            context.read<SavedItemsScreenViewModel>().removeBookmark(id, BookmarkType.pharmacyBookmark),
                         navigateToPharmacyDetailsCallback: (_) {},
                       ),
                     ),

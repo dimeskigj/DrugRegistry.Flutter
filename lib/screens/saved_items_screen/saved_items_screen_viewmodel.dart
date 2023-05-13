@@ -1,3 +1,4 @@
+import 'package:flutter_drug_registry/core/models/bookmark_type.dart';
 import 'package:flutter_drug_registry/core/providers/saved_items_provider.dart';
 import 'package:flutter_drug_registry/core/services/drug_service.dart';
 import 'package:flutter_drug_registry/core/services/shared_preferences_service.dart';
@@ -41,6 +42,17 @@ class SavedItemsScreenViewModel extends ViewModelBase {
     } finally {
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  void removeBookmark(String id, BookmarkType type) {
+    switch (type) {
+      case BookmarkType.drugBookmark:
+        _savedItemsProvider.removeDrug(id);
+        break;
+      case BookmarkType.pharmacyBookmark:
+        _savedItemsProvider.removePharmacy(id);
+        break;
     }
   }
 }
