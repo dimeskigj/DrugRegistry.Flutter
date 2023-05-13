@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/core/providers/saved_items_provider.dart';
 import 'package:flutter_drug_registry/core/services/location_service.dart';
+import 'package:flutter_drug_registry/core/services/shared_preferences_service.dart';
 import 'package:flutter_drug_registry/screens/view_model_base.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,6 +14,8 @@ import '../../core/services/pharmacy_service.dart';
 
 class PharmacySearchScreenViewModel extends ViewModelBase {
   final PharmacyService _pharmacyService = GetIt.I.get<PharmacyService>();
+  final SharedPreferencesService _sharedPreferencesService = GetIt.I.get<SharedPreferencesService>();
+  late final SavedItemsProvider _savedItemsProvider;
 
   late final double _longitude;
   late final double _latitude;
@@ -48,6 +52,10 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
   bool get hasError => _hasError;
 
   bool get hasMoreResults => (_page + 1) * _pageSize < _total;
+
+  PharmacySearchScreenViewModel(SavedItemsProvider savedItemsProvider) {
+    _savedItemsProvider = savedItemsProvider;
+  }
 
   @override
   void onInit() {
@@ -97,6 +105,7 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
       _pageSize = pagedResult.size;
       _total = pagedResult.totalCount;
       _searchResults = pagedResult.data.toList();
+      checkBookmarks();
     } catch (e) {
       _hasError = true;
     } finally {
@@ -119,6 +128,7 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
       }
       _page = pagedResult.page;
       _searchResults.addAll(pagedResult.data);
+      checkBookmarks();
     } catch (e) {
       _hasError = true;
     } finally {
@@ -137,8 +147,23 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
 
   void togglePharmacyBookmark(String id) {
     final pharmacyToBookmark = searchResults.firstWhere((element) => element.id == id);
+    
+    if (!pharmacyToBookmark.isBookmarked) {
+      _savedItemsProvider.addPharmacy(pharmacyToBookmark);
+    } else {
+      _savedItemsProvider.removePharmacy(id);
+    }
+
     pharmacyToBookmark.isBookmarked = !pharmacyToBookmark.isBookmarked;
     notifyListeners();
+  }
+
+  void checkBookmarks() {
+    final savedPharmaciesIds = _sharedPreferencesService.getSavedPharmaciesIds() ?? [];
+    final bookmarkedPharmacies  = searchResults.where((pharmacy) => savedPharmaciesIds.indexWhere((id) => pharmacy.id == id) >= 0);
+    for (var pharmacy in bookmarkedPharmacies) {
+      pharmacy.isBookmarked = true;
+    }
   }
 
   @override

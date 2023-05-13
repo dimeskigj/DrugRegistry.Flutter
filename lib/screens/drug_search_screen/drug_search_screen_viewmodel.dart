@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/core/providers/saved_items_provider.dart';
 import 'package:flutter_drug_registry/core/services/drug_service.dart';
+import 'package:flutter_drug_registry/core/services/shared_preferences_service.dart';
 import 'package:flutter_drug_registry/screens/view_model_base.dart';
 import 'package:get_it/get_it.dart';
 
@@ -9,6 +11,8 @@ import '../../core/models/drug.dart';
 
 class DrugSearchScreenViewModel extends ViewModelBase {
   final DrugService _drugService = GetIt.I.get<DrugService>();
+  final SharedPreferencesService _sharedPreferencesService = GetIt.I.get<SharedPreferencesService>();
+  late final SavedItemsProvider _savedItemsProvider;
 
   final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -40,6 +44,10 @@ class DrugSearchScreenViewModel extends ViewModelBase {
   bool get hasError => _hasError;
 
   bool get hasMoreResults => (_page + 1) * _pageSize < _total;
+
+  DrugSearchScreenViewModel(SavedItemsProvider savedItemsProvider) {
+    _savedItemsProvider = savedItemsProvider;
+  }
 
   @override
   void onInit() {
@@ -78,6 +86,7 @@ class DrugSearchScreenViewModel extends ViewModelBase {
         _pageSize = pagedResult.size;
         _total = pagedResult.totalCount;
         _searchResults = pagedResult.data.toList();
+        checkBookmarks();
       }
     } catch (e) {
       _hasError = true;
@@ -96,6 +105,7 @@ class DrugSearchScreenViewModel extends ViewModelBase {
       final pagedResult = await _drugService.searchDrugs(_lastQuery, page: _page + 1, size: _pageSize);
       _page = pagedResult.page;
       _searchResults.addAll(pagedResult.data);
+      checkBookmarks();
     } catch (e) {
       _hasError = true;
     } finally {
@@ -114,8 +124,23 @@ class DrugSearchScreenViewModel extends ViewModelBase {
 
   void toggleDrugBookmark(String id) {
     final drugToBookmark = searchResults.firstWhere((element) => element.id == id);
+
+    if (!drugToBookmark.isBookmarked) {
+      _savedItemsProvider.addDrug(drugToBookmark);
+    } else {
+      _savedItemsProvider.removeDrug(id);
+    }
+
     drugToBookmark.isBookmarked = !drugToBookmark.isBookmarked;
     notifyListeners();
+  }
+
+  void checkBookmarks() {
+    final savedDrugIds = _sharedPreferencesService.getSavedDrugsIds() ?? [];
+    final bookmarkedDrugs = searchResults.where((drug) => savedDrugIds.indexWhere((id) => drug.id == id) >= 0);
+    for (var drug in bookmarkedDrugs) {
+      drug.isBookmarked = true;
+    }
   }
 
   @override

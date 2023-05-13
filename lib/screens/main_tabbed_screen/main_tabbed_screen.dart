@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/core/providers/saved_items_provider.dart';
 import 'package:flutter_drug_registry/screens/drug_search_screen/drug_search_screen.dart';
 import 'package:flutter_drug_registry/screens/drug_search_screen/drug_search_screen_viewmodel.dart';
 import 'package:flutter_drug_registry/screens/main_tabbed_screen/main_tabbed_screen_viewmodel.dart';
@@ -29,8 +30,8 @@ class MainTabbedScreen extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MainTabbedScreenViewModel()),
-        ChangeNotifierProvider(create: (_) => DrugSearchScreenViewModel()),
-        ChangeNotifierProvider(create: (_) => PharmacySearchScreenViewModel()),
+        ChangeNotifierProvider(create: (_) => DrugSearchScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false))),
+        ChangeNotifierProvider(create: (_) => PharmacySearchScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false))),
         ChangeNotifierProxyProvider<ThemeProvider, SettingsScreenViewModel>(
           update: (_, themeProvider, previousViewModel) => SettingsScreenViewModel(themeProvider),
           create: (context) => SettingsScreenViewModel(Provider.of<ThemeProvider>(context, listen: false)),

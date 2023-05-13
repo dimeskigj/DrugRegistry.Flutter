@@ -13,13 +13,13 @@ class SavedItemsProvider extends ChangeNotifier {
   List<Drug> savedDrugs = [];
   List<Pharmacy> savedPharmacies = [];
 
-  void setDrugs(List<Drug> drugs) {
-    savedDrugs = drugs;
+  void appendDrugs(List<Drug> drugs) {
+    savedDrugs.addAll(drugs);
     notifyListeners();
   }
 
-  void setPharmacies(List<Pharmacy> pharmacies) {
-    savedPharmacies = pharmacies;
+  void appendPharmacies(List<Pharmacy> pharmacies) {
+    savedPharmacies.addAll(pharmacies);
     notifyListeners();
   }
 
@@ -36,13 +36,15 @@ class SavedItemsProvider extends ChangeNotifier {
   }
 
   void removeDrug(String id) {
-    savedDrugs.removeAt(savedDrugs.indexWhere((element) => element.id == id));
+    final index = savedDrugs.indexWhere((element) => element.id == id);
+    if (index != -1) savedDrugs.removeAt(index);
     notifyListeners();
     unawaited(_removeDrugFromPreferences(id));
   }
 
   void removePharmacy(String id) {
-    savedPharmacies.removeAt(savedPharmacies.indexWhere((element) => element.id == id));
+    final index = savedPharmacies.indexWhere((element) => element.id == id);
+    if (index != -1) savedPharmacies.removeAt(index);
     notifyListeners();
     unawaited(_removePharmacyFromPreferences(id));
   }
@@ -55,8 +57,7 @@ class SavedItemsProvider extends ChangeNotifier {
 
   Future<void> _removeDrugFromPreferences(String id) async {
     final currentPrefs = _sharedPreferencesService.getSavedDrugsIds() ?? [];
-    currentPrefs.where((currentId) => currentId != id);
-    await _sharedPreferencesService.setSavedDrugsIds(currentPrefs);
+    await _sharedPreferencesService.setSavedDrugsIds(currentPrefs.where((currentId) => currentId != id).toList());
   }
 
   Future<void> _addPharmacyToPreferences(String id) async {
@@ -67,7 +68,6 @@ class SavedItemsProvider extends ChangeNotifier {
 
   Future<void> _removePharmacyFromPreferences(String id) async {
     final currentPrefs = _sharedPreferencesService.getSavedPharmaciesIds() ?? [];
-    currentPrefs.where((currentId) => currentId != id);
-    await _sharedPreferencesService.setSavedPharmaciesIds(currentPrefs);
+    await _sharedPreferencesService.setSavedPharmaciesIds(currentPrefs.where((currentId) => currentId != id).toList());
   }
 }
