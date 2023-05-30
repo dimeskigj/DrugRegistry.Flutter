@@ -41,8 +41,6 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
 
   Location get userLocation => _userLocation;
 
-  bool get hasSearched => _hasSearched;
-
   bool get isLoading => _isLoading;
 
   bool get isAtEndOfResults => _hasSearched && !_isLoading && searchResults.isNotEmpty && !hasMoreResults;
@@ -91,13 +89,13 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
     try {
       _hasError = false;
       _isLoading = true;
-      _hasSearched = true;
       _searchResults = [];
       _lastQuery = query;
       notifyListeners();
       PagedResult<Pharmacy> pagedResult;
       if (query.isNotEmpty) {
         pagedResult = await _pharmacyService.searchPharmacies(query, size: _pageSize);
+        _hasSearched = true;
       } else {
         pagedResult = await _pharmacyService.searchPharmaciesByLocation(_latitude, _longitude, size: _pageSize);
       }

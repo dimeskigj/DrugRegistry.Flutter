@@ -77,11 +77,11 @@ class DrugSearchScreenViewModel extends ViewModelBase {
       } else if (query.length >= 3 && (_hasError || query != _lastQuery)) {
         _hasError = false;
         _isLoading = true;
-        _hasSearched = true;
         _searchResults = [];
         _lastQuery = query;
         notifyListeners();
         final pagedResult = await _drugService.searchDrugs(query, size: _pageSize);
+        _hasSearched = true;
         _page = pagedResult.page;
         _pageSize = pagedResult.size;
         _total = pagedResult.totalCount;
