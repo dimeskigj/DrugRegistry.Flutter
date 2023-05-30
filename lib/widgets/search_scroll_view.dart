@@ -62,7 +62,7 @@ class SearchScrollView extends StatelessWidget {
             opacity: animation,
             child: SlideTransition(
               position: Tween<Offset>(
-                begin: const Offset(0.5, 0),
+                begin: const Offset(0, 0.5),
                 end: Offset.zero,
               ).animate(animation),
               child: child,
