@@ -112,89 +112,87 @@ class DrugDetailsScreen extends StatelessWidget {
                   shape: const Border(),
                   elevation: 0,
                   margin: EdgeInsets.zero,
-                  child: Material(
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (drug.atc != null)
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                      text: "ATЦ: ",
-                                      style: Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    TextSpan(
-                                      text: drug.atc,
-                                      style: Theme.of(context).textTheme.bodyMedium,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          if (drug.approvalCarrier != null)
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                      text: "Носител на одобрение: ",
-                                      style: Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    TextSpan(
-                                      text: drug.approvalCarrier,
-                                      style: Theme.of(context).textTheme.bodyMedium,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          if (drug.decisionNumber != null)
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: const TextStyle(color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                      text: "Број на решение: ",
-                                      style: Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    TextSpan(
-                                      text: drug.decisionNumber,
-                                      style: Theme.of(context).textTheme.bodyMedium,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          if (drug.decisionDate != null)
-                            RichText(
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (drug.atc != null)
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: RichText(
                               text: TextSpan(
                                 style: const TextStyle(color: Colors.black),
                                 children: [
                                   TextSpan(
-                                    text: "Датум на решение: ",
+                                    text: "ATЦ: ",
                                     style: Theme.of(context).textTheme.bodyLarge,
                                   ),
                                   TextSpan(
-                                    text:
-                                        "${drug.decisionDate?.toUtc().day}/${drug.decisionDate?.toUtc().month}/${drug.decisionDate?.toUtc().year}",
+                                    text: drug.atc,
                                     style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ],
                               ),
                             ),
-                        ],
-                      ),
+                          ),
+                        if (drug.approvalCarrier != null)
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(color: Colors.black),
+                                children: [
+                                  TextSpan(
+                                    text: "Носител на одобрение: ",
+                                    style: Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                  TextSpan(
+                                    text: drug.approvalCarrier,
+                                    style: Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        if (drug.decisionNumber != null)
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: RichText(
+                              text: TextSpan(
+                                style: const TextStyle(color: Colors.black),
+                                children: [
+                                  TextSpan(
+                                    text: "Број на решение: ",
+                                    style: Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                  TextSpan(
+                                    text: drug.decisionNumber,
+                                    style: Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        if (drug.decisionDate != null)
+                          RichText(
+                            text: TextSpan(
+                              style: const TextStyle(color: Colors.black),
+                              children: [
+                                TextSpan(
+                                  text: "Датум на решение: ",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                TextSpan(
+                                  text:
+                                      "${drug.decisionDate?.toUtc().day}/${drug.decisionDate?.toUtc().month}/${drug.decisionDate?.toUtc().year}",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ),

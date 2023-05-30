@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_drug_registry/widgets/search_bar.dart';
+import 'package:flutter_drug_registry/widgets/search_bar.dart' as dr_search_bar;
 import 'package:flutter_drug_registry/widgets/svg_status.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -49,7 +49,7 @@ class SearchScrollView extends StatelessWidget {
           snap: true,
           pinned: false,
           elevation: 0,
-          flexibleSpace: SearchBar(
+          flexibleSpace: dr_search_bar.SearchBar(
             textEditingController: textEditingController,
             hintText: searchBarHintText ?? '',
             focusNode: searchFocusNode,
