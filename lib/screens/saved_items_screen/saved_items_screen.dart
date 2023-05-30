@@ -51,66 +51,68 @@ class SavedItemsScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            // Drugs
-            ListView(
-              children: [
-                if (context.watch<SavedItemsScreenViewModel>().isLoading)
-                  Center(
-                    child: LoadingAnimationWidget.prograssiveDots(color: Theme.of(context).primaryColor, size: 50),
-                  ),
-                if (context.watch<SavedItemsScreenViewModel>().hasNoSavedDrugs)
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 50),
-                      child: Column(
-                        children: [
-                          Container(margin: const EdgeInsets.only(bottom: 10), child: const Icon(Icons.bookmark_rounded)),
-                          const Text('Немаш зачувани лекови.'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ...context.watch<SavedItemsProvider>().savedDrugs.map(
-                      (drug) => DrugCard(
-                        drug: drug,
-                        toggleDrugBookmark: (id) =>
-                            context.read<SavedItemsScreenViewModel>().removeBookmark(id, BookmarkType.drugBookmark),
-                        navigateToDrugDetailsCallback: (drug) => navigatorKey.currentState?.push(
-                          MaterialPageRoute(
-                            builder: (context) => DrugDetailsScreen(drug: drug),
+        body: context.watch<SavedItemsScreenViewModel>().isLoading
+            ? Center(
+                child: LoadingAnimationWidget.prograssiveDots(color: Theme.of(context).primaryColor, size: 50),
+              )
+            : TabBarView(
+                children: [
+                  // Drugs
+                  ListView(
+                    children: [
+                      if (context.watch<SavedItemsScreenViewModel>().hasNoSavedDrugs)
+                        Center(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 50),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  child: const Icon(Icons.bookmark_rounded),
+                                ),
+                                const Text('Немаш зачувани лекови.'),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-              ],
-            ),
-            // Pharmacies
-            ListView(
-              children: [
-                if (context.watch<SavedItemsScreenViewModel>().isLoading)
-                  Center(
-                    child: LoadingAnimationWidget.prograssiveDots(color: Theme.of(context).primaryColor, size: 50),
-                  ),
-                if (context.watch<SavedItemsScreenViewModel>().hasNoSavedPharmacies)
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 50),
-                      child: Column(
-                        children: [
-                          Container(margin: const EdgeInsets.only(bottom: 10), child: const Icon(Icons.bookmark_rounded)),
-                          const Text(
-                            'Немаш зачувани аптеки.',
+                      ...context.watch<SavedItemsProvider>().savedDrugs.map(
+                            (drug) => DrugCard(
+                              drug: drug,
+                              toggleDrugBookmark: (id) =>
+                                  context.read<SavedItemsScreenViewModel>().removeBookmark(id, BookmarkType.drugBookmark),
+                              navigateToDrugDetailsCallback: (drug) => navigatorKey.currentState?.push(
+                                MaterialPageRoute(
+                                  builder: (context) => DrugDetailsScreen(drug: drug),
+                                ),
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                ...context.watch<SavedItemsProvider>().savedPharmacies.map(
-                      (pharmacy) => PharmacyCard(
-                        pharmacy: pharmacy,
-                        togglePharmacyBookmark: (id) =>
+                  // Pharmacies
+                  ListView(
+                    children: [
+                      if (context.watch<SavedItemsScreenViewModel>().hasNoSavedPharmacies)
+                        Center(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 50),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  child: const Icon(Icons.bookmark_rounded),
+                                ),
+                                const Text(
+                                  'Немаш зачувани аптеки.',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ...context.watch<SavedItemsProvider>().savedPharmacies.map(
+                            (pharmacy) => PharmacyCard(
+                              pharmacy: pharmacy,
+                              togglePharmacyBookmark: (id) =>
                             context.read<SavedItemsScreenViewModel>().removeBookmark(id, BookmarkType.pharmacyBookmark),
                         navigateToPharmacyDetailsCallback: (_) {},
                       ),
