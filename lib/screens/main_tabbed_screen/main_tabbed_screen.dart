@@ -17,12 +17,15 @@ import '../settings_screen/settings_screen.dart';
 
 class MainTabbedScreen extends StatelessWidget {
   final FocusNode _drugSearchFocusNode = FocusNode();
+  final FocusNode _pharmacySearchFocusNode = FocusNode();
 
   MainTabbedScreen({super.key});
 
   void requestFocusForIndex(int index) {
     if (index == 0) {
       _drugSearchFocusNode.requestFocus();
+    } else if (index == 1) {
+      _pharmacySearchFocusNode.requestFocus();
     }
   }
 
@@ -32,8 +35,14 @@ class MainTabbedScreen extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => MainTabbedScreenViewModel()),
         ChangeNotifierProvider(create: (_) => DrugSearchScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false))),
-        ChangeNotifierProvider(create: (_) => PharmacySearchScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false))),
-        ChangeNotifierProvider(create: (_) => SavedItemsScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false))),
+        ChangeNotifierProvider(
+          create: (_) => SavedItemsScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false)),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PharmacySearchScreenViewModel(Provider.of<SavedItemsProvider>(context, listen: false)),
+          lazy: false,
+        ),
         ChangeNotifierProxyProvider<ThemeProvider, SettingsScreenViewModel>(
           update: (_, themeProvider, previousViewModel) => SettingsScreenViewModel(themeProvider),
           create: (context) => SettingsScreenViewModel(Provider.of<ThemeProvider>(context, listen: false)),
@@ -43,7 +52,7 @@ class MainTabbedScreen extends StatelessWidget {
         builder: (context) => Scaffold(
           body: [
             DrugSearchScreen(searchFocusNode: _drugSearchFocusNode),
-            PharmacySearchScreen(),
+            PharmacySearchScreen(searchFocusNode: _pharmacySearchFocusNode),
             const SavedItemsScreen(),
             const SettingsScreen(),
           ][context.watch<MainTabbedScreenViewModel>().currentScreenIndex],

@@ -63,7 +63,7 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
     _textEditingController.addListener(() {
       if (_debounce?.isActive ?? false) _debounce!.cancel();
       _debounce = Timer(_debounceTimeDuration, () async {
-        await searchForPharmacies(_textEditingController.value.text.trim());
+        await searchForPharmacies(query: _textEditingController.value.text.trim());
       });
     });
     _scrollController.addListener(() async {
@@ -81,13 +81,13 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
       _longitude = _userLocation.longitude;
       _latitude = _userLocation.latitude;
       notifyListeners();
-      searchForPharmacies('');
+      searchForPharmacies();
     } finally {
       _isLoading = false;
     }
   }
 
-  Future<void> searchForPharmacies(String query) async {
+  Future<void> searchForPharmacies({String query = ''}) async {
     try {
       _hasError = false;
       _isLoading = true;
@@ -139,7 +139,7 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
 
   Future<void> retry() async {
     if (_searchResults.isEmpty) {
-      await searchForPharmacies(_lastQuery);
+      await searchForPharmacies(query: _lastQuery);
     } else {
       await loadNextPage();
     }

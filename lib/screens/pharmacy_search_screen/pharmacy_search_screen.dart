@@ -9,9 +9,9 @@ import '../../widgets/diffutil_sliverlist_widget.dart';
 import '../../widgets/svg_status.dart';
 
 class PharmacySearchScreen extends StatelessWidget {
-  final FocusNode searchFocusNode = FocusNode();
+  final FocusNode searchFocusNode;
 
-  PharmacySearchScreen({super.key});
+  const PharmacySearchScreen({super.key, required this.searchFocusNode});
 
   @override
   Widget build(BuildContext context) {
