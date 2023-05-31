@@ -25,7 +25,7 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
   final _debounceTimeDuration = const Duration(milliseconds: 500);
   List<Pharmacy> _searchResults = [];
   Timer? _debounce;
-  String _lastQuery = '';
+  String? _lastQuery;
   int _page = 0;
   int _total = 0;
   int _pageSize = 8;
@@ -86,6 +86,7 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
   }
 
   Future<void> searchForPharmacies({String query = ''}) async {
+    if (query == _lastQuery) return;
     try {
       _hasError = false;
       _isLoading = true;
@@ -119,8 +120,8 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
       _isLoading = true;
       notifyListeners();
       PagedResult<Pharmacy> pagedResult;
-      if (_lastQuery.isNotEmpty) {
-        pagedResult = await _pharmacyService.searchPharmacies(_lastQuery, page: _page + 1, size: _pageSize);
+      if (_lastQuery?.isNotEmpty ?? false) {
+        pagedResult = await _pharmacyService.searchPharmacies(_lastQuery ?? '', page: _page + 1, size: _pageSize);
       } else {
         pagedResult = await _pharmacyService.searchPharmaciesByLocation(_latitude, _longitude, page: _page + 1, size: _pageSize);
       }
@@ -137,7 +138,7 @@ class PharmacySearchScreenViewModel extends ViewModelBase {
 
   Future<void> retry() async {
     if (_searchResults.isEmpty) {
-      await searchForPharmacies(query: _lastQuery);
+      await searchForPharmacies(query: _lastQuery ?? '');
     } else {
       await loadNextPage();
     }
