@@ -1,3 +1,3 @@
 class Constants {
-  static const String baseApiUrl = 'registar.dimeski-vps.xyz';
+  static const String baseApiUrl = 'lekovi.dimeski.net';
 }
