@@ -3,6 +3,7 @@ import 'package:flutter_drug_registry/core/services/drug_service.dart';
 import 'package:flutter_drug_registry/core/services/location_service.dart';
 import 'package:flutter_drug_registry/core/services/pharmacy_service.dart';
 import 'package:flutter_drug_registry/core/services/shared_preferences_service.dart';
+import 'package:flutter_drug_registry/screens/main_screen/main_screen.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
@@ -36,11 +37,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) => MaterialApp(
-        home: const Placeholder(),
+        home: const MainScreen(),
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.deepPurple,
+            primarySwatch: Colors.blue,
             brightness: Brightness.light,
           ),
         ),
