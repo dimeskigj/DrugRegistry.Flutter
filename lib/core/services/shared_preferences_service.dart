@@ -13,13 +13,17 @@ class SharedPreferencesService {
 
   bool? getIsLightTheme() => _prefs.getBool(_themeKey);
 
-  Future<bool> setIsLightTheme(bool value) async => await _prefs.setBool(_themeKey, value);
+  Future<bool> setIsLightTheme(bool value) async =>
+      await _prefs.setBool(_themeKey, value);
 
   List<String>? getSavedDrugsIds() => _prefs.getStringList(_savedDrugsKey);
 
-  Future<bool> setSavedDrugsIds(List<String> value) => _prefs.setStringList(_savedDrugsKey, value);
+  Future<bool> setSavedDrugsIds(List<String> value) =>
+      _prefs.setStringList(_savedDrugsKey, value);
 
-  List<String>? getSavedPharmaciesIds() => _prefs.getStringList(_savedPharmaciesKey);
+  List<String>? getSavedPharmaciesIds() =>
+      _prefs.getStringList(_savedPharmaciesKey);
 
-  Future<bool> setSavedPharmaciesIds(List<String> value) => _prefs.setStringList(_savedPharmaciesKey, value);
+  Future<bool> setSavedPharmaciesIds(List<String> value) =>
+      _prefs.setStringList(_savedPharmaciesKey, value);
 }

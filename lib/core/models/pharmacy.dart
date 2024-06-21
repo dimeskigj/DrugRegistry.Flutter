@@ -29,7 +29,8 @@ class Pharmacy {
   @JsonKey(includeFromJson: false, includeToJson: false)
   bool isBookmarked = false;
 
-  Pharmacy(this.id, {
+  Pharmacy(
+    this.id, {
     this.idNumber,
     this.taxNumber,
     this.code,
@@ -51,7 +52,8 @@ class Pharmacy {
     this.lastUpdate,
   });
 
-  factory Pharmacy.fromJson(Map<String, dynamic> json) => _$PharmacyFromJson(json);
+  factory Pharmacy.fromJson(Map<String, dynamic> json) =>
+      _$PharmacyFromJson(json);
 
   Map<String, dynamic> toJson() => _$PharmacyToJson(this);
 }

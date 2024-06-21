@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_drug_registry/core/providers/saved_items_provider.dart';
-import 'package:flutter_drug_registry/core/providers/theme_provider.dart';
 import 'package:flutter_drug_registry/core/services/drug_service.dart';
 import 'package:flutter_drug_registry/core/services/location_service.dart';
 import 'package:flutter_drug_registry/core/services/pharmacy_service.dart';
 import 'package:flutter_drug_registry/core/services/shared_preferences_service.dart';
-import 'package:flutter_drug_registry/screens/main_tabbed_screen/main_tabbed_screen.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  GetIt.I.registerLazySingleton<DrugService>(() => DrugService());
-  GetIt.I.registerLazySingleton<PharmacyService>(() => PharmacyService());
-  GetIt.I.registerLazySingleton<LocationService>(() => LocationService());
-  GetIt.I.registerLazySingleton<SharedPreferencesService>(() => SharedPreferencesService());
+  GetIt.I.registerLazySingleton<DrugService>(
+    () => DrugService(),
+  );
+  GetIt.I.registerLazySingleton<PharmacyService>(
+    () => PharmacyService(),
+  );
+  GetIt.I.registerLazySingleton<LocationService>(
+    () => LocationService(),
+  );
+  GetIt.I.registerLazySingleton<SharedPreferencesService>(
+    () => SharedPreferencesService(),
+  );
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -29,17 +34,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => SavedItemsProvider()),
-      ],
-      child: Builder(
-        builder: (context) => MaterialApp(
-          home: MainTabbedScreen(),
-          theme: context.watch<ThemeProvider>().currentTheme,
-          navigatorKey: navigatorKey,
+    return Builder(
+      builder: (context) => MaterialApp(
+        home: const Placeholder(),
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.deepPurple,
+            brightness: Brightness.light,
+          ),
         ),
+        navigatorKey: navigatorKey,
       ),
     );
   }
