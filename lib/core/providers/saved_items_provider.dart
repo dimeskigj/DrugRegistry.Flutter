@@ -8,7 +8,8 @@ import '../models/drug.dart';
 import '../models/pharmacy.dart';
 
 class SavedItemsProvider extends ChangeNotifier {
-  final SharedPreferencesService _sharedPreferencesService = GetIt.I.get<SharedPreferencesService>();
+  final SharedPreferencesService _sharedPreferencesService =
+      GetIt.I.get<SharedPreferencesService>();
 
   List<Drug> savedDrugs = [];
   List<Pharmacy> savedPharmacies = [];
@@ -63,17 +64,26 @@ class SavedItemsProvider extends ChangeNotifier {
 
   Future<void> _removeDrugFromPreferences(String id) async {
     final currentPrefs = _sharedPreferencesService.getSavedDrugsIds() ?? [];
-    await _sharedPreferencesService.setSavedDrugsIds(currentPrefs.where((currentId) => currentId != id).toList());
+    await _sharedPreferencesService.setSavedDrugsIds(
+      currentPrefs.where((currentId) => currentId != id).toList(),
+    );
   }
 
   Future<void> _addPharmacyToPreferences(String id) async {
-    final currentPrefs = _sharedPreferencesService.getSavedPharmaciesIds() ?? [];
+    final currentPrefs =
+        _sharedPreferencesService.getSavedPharmaciesIds() ?? [];
+
     currentPrefs.add(id);
+
     await _sharedPreferencesService.setSavedPharmaciesIds(currentPrefs);
   }
 
   Future<void> _removePharmacyFromPreferences(String id) async {
-    final currentPrefs = _sharedPreferencesService.getSavedPharmaciesIds() ?? [];
-    await _sharedPreferencesService.setSavedPharmaciesIds(currentPrefs.where((currentId) => currentId != id).toList());
+    final currentPrefs =
+        _sharedPreferencesService.getSavedPharmaciesIds() ?? [];
+
+    await _sharedPreferencesService.setSavedPharmaciesIds(
+      currentPrefs.where((currentId) => currentId != id).toList(),
+    );
   }
 }

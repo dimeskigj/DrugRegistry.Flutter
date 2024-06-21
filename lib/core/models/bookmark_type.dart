@@ -1,4 +1,1 @@
-enum BookmarkType {
-  drugBookmark,
-  pharmacyBookmark
-}
+enum BookmarkType { drugBookmark, pharmacyBookmark }

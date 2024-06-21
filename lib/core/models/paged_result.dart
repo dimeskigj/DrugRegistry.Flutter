@@ -13,7 +13,11 @@ class PagedResult<T> {
 
   PagedResult(this.data, this.totalCount, this.page, this.size);
 
-  factory PagedResult.fromJson(Map<String, dynamic> json) => _$PagedResultFromJson(json, fromJsonFactory<T>);
+  factory PagedResult.fromJson(Map<String, dynamic> json) =>
+      _$PagedResultFromJson(
+        json,
+        fromJsonFactory<T>,
+      );
 
   Map<String, dynamic> toJson() => _$PagedResultToJson(this, toJsonFactory<T>);
 }

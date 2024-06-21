@@ -5,6 +5,7 @@ import '../models/location.dart';
 class LocationService {
   Future<bool> _checkLocationServices() async {
     bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+    
     if (!isLocationEnabled) {
       // Location services are disabled on the device.
       return false;
@@ -14,6 +15,7 @@ class LocationService {
 
   Future<bool> _checkLocationPermissions() async {
     LocationPermission permission = await Geolocator.checkPermission();
+
     if (permission == LocationPermission.denied) {
       // Location permissions are denied.
       permission = await Geolocator.requestPermission();
@@ -32,11 +34,13 @@ class LocationService {
 
   Future<Location> getCurrentLocation() async {
     bool locationEnabled = await _checkLocationServices();
+
     if (!locationEnabled) {
       return Future.error(LocationServiceDisabledException);
     }
 
     bool locationPermissionGranted = await _checkLocationPermissions();
+
     if (!locationPermissionGranted) {
       return Future.error(PermissionDeniedException);
     }
