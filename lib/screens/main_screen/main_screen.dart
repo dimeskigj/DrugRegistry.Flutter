@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drug_registry/screens/drug_search_screen/drug_search_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class MainScreenState extends State<MainScreen> {
         ],
       ),
       body: const [
-        Placeholder(),
+        DrugSearchScreen(),
         Placeholder(),
         Placeholder(),
       ][currentPageIndex],
