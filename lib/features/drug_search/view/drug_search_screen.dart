@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_drug_registry/features/drug_search/drug_search.dart';
+import 'package:flutter_drug_registry/features/drug_search/view/suggestion_list.dart';
 
-class DrugSearchScreen extends StatefulWidget {
+class DrugSearchScreen extends StatelessWidget {
   const DrugSearchScreen({Key? key}) : super(key: key);
 
-  @override
-  DrugSearchScreenState createState() => DrugSearchScreenState();
-}
-
-class DrugSearchScreenState extends State<DrugSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +15,14 @@ class DrugSearchScreenState extends State<DrugSearchScreen> {
           child: Column(
             children: [
               SearchAnchor(
-                // ignore: avoid_print
-                viewOnChanged: (value) => print("changed: $value"),
-                // ignore: avoid_print
-                viewOnSubmitted: (value) => print("submitted: $value"),
+                viewOnChanged: (value) => context
+                    .read<DrugSearchBloc>()
+                    .add(DrugSearchQueryChanged(query: value)),
+                viewOnSubmitted: (value) => context
+                    .read<DrugSearchBloc>()
+                    .add(DrugSearchQuerySubmitted(query: value)),
                 builder: (
-                  BuildContext context,
+                  _,
                   SearchController controller,
                 ) {
                   return SearchBar(
@@ -32,39 +32,41 @@ class DrugSearchScreenState extends State<DrugSearchScreen> {
                     onTap: () {
                       controller.openView();
                     },
-                    onChanged: (_) {
-                      controller.openView();
-                    },
                     leading: const Padding(
                       padding: EdgeInsets.only(left: 8),
                       child: Icon(Icons.search),
                     ),
                   );
                 },
-                suggestionsBuilder: (
-                  BuildContext context,
-                  SearchController controller,
-                ) {
-                  return List.generate(
-                    5,
-                    (int index) {
-                      final String item = 'item $index';
-                      return ListTile(
-                        title: Text(item),
-                        onTap: () {
-                          setState(
-                            () {
-                              controller.closeView(item);
-                            },
-                          );
-                        },
-                      );
+                viewBuilder: (_) {
+                  return BlocBuilder<DrugSearchBloc, DrugSearchState>(
+                    builder: (context, state) => switch (state) {
+                      DrugSearchInitial() => Container(),
+                      DrugSearchLoadInProgress() => const Align(
+                          alignment: Alignment.topCenter,
+                          child: LinearProgressIndicator(),
+                        ),
+                      DrugSearchLoadSuccess() =>
+                        DrugSuggestionList(drugs: state.drugs),
+                      DrugSearchLoadFail() => Container(),
                     },
                   );
                 },
+                suggestionsBuilder: (_, __) => [],
               ),
-              const Expanded(
-                child: Center(),
+              Expanded(
+                child: BlocBuilder<DrugSearchBloc, DrugSearchState>(
+                  builder: (context, state) => switch (state) {
+                    DrugSearchInitial() => Container(),
+                    DrugSearchLoadInProgress() => const Align(
+                        alignment: Alignment.topCenter,
+                        child: LinearProgressIndicator(),
+                      ),
+                    DrugSearchLoadSuccess() =>
+                      DrugSuggestionList(drugs: state.drugs),
+                    DrugSearchLoadFail() => Container(),
+                  },
+                ),
               ),
             ],
           ),

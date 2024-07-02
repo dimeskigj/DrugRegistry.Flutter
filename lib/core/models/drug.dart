@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'issuing_type.dart';
@@ -5,7 +6,7 @@ import 'issuing_type.dart';
 part 'drug.g.dart';
 
 @JsonSerializable()
-class Drug {
+class Drug extends Equatable{
   final String id;
   final String? decisionNumber;
   final String? atc;
@@ -26,10 +27,8 @@ class Drug {
   final double? priceWithVat;
   final double? priceWithoutVat;
   final DateTime? lastUpdate;
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  bool isBookmarked = false;
 
-  Drug(
+  const Drug(
     this.id, {
     this.decisionNumber,
     this.atc,
@@ -55,4 +54,7 @@ class Drug {
   factory Drug.fromJson(Map<String, dynamic> json) => _$DrugFromJson(json);
 
   Map<String, dynamic> toJson() => _$DrugToJson(this);
+  
+  @override
+  List<Object?> get props => [id];
 }

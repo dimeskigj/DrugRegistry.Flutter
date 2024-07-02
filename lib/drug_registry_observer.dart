@@ -6,24 +6,24 @@ class DrugRegistryBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-    print('onEvent $event');
+    print('#### BLOC #### onEvent $event');
   }
 
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    print('onChange $change');
+    print('#### BLOC #### onChange $change');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    print('onTransition $transition');
+    print('#### BLOC #### onTransition $transition');
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    print('onError $error');
+    print('#### BLOC #### onError $error');
     super.onError(bloc, error, stackTrace);
   }
 }
