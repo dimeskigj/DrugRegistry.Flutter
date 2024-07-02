@@ -3,7 +3,7 @@ import 'package:flutter_drug_registry/core/services/drug_service.dart';
 import 'package:flutter_drug_registry/core/services/location_service.dart';
 import 'package:flutter_drug_registry/core/services/pharmacy_service.dart';
 import 'package:flutter_drug_registry/core/services/shared_preferences_service.dart';
-import 'package:flutter_drug_registry/screens/main_screen/main_screen.dart';
+import 'package:flutter_drug_registry/features/main/view/main_screen.dart';
 import 'package:get_it/get_it.dart';
 
 void main() async {
