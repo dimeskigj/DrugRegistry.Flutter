@@ -26,6 +26,7 @@ class DrugSearchBloc extends Bloc<DrugSearchEvent, DrugSearchState> {
       _onDrugSearchQueryChanged,
       transformer: debounce(const Duration(milliseconds: 300)),
     );
+    on<DrugSearchSuggestionTapped>(_onDrugSearchSuggestionTapped);
   }
 
   Future<void> _onDrugSearchQueryChanged(
@@ -46,11 +47,22 @@ class DrugSearchBloc extends Bloc<DrugSearchEvent, DrugSearchState> {
     try {
       if (_lastQuery == query) return;
       _lastQuery = query;
+
+      if (query == '') {
+        emit(const DrugSearchLoadSuccess(drugs: []));
+        return;
+      }
+
       emit(DrugSearchLoadInProgress());
       var results = await _drugService.searchDrugs(query, size: 50);
       emit(DrugSearchLoadSuccess(drugs: results.data.toList()));
     } catch (_) {
       emit(const DrugSearchLoadFail());
     }
+  }
+
+  void _onDrugSearchSuggestionTapped(
+      DrugSearchSuggestionTapped event, Emitter<DrugSearchState> emit) {
+    emit(DrugSearchLoadSuccess(drugs: event.drugGroup.drugs));
   }
 }
