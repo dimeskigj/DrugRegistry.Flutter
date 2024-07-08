@@ -29,7 +29,7 @@ class MainScreenState extends State<MainScreen> {
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.health_and_safety_rounded),
-            icon: Icon(Icons.health_and_safety),
+            icon: Icon(Icons.health_and_safety_outlined),
             label: 'Аптеки',
           ),
           NavigationDestination(

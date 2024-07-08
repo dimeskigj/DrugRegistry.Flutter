@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_drug_registry/features/drug_details/view/drug_details_screen.dart';
 import 'package:flutter_drug_registry/features/drug_search/drug_search.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/drug_card.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/suggestion_list.dart';
@@ -114,7 +115,13 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                                   horizontal: 16,
                                 ),
                                 child: DrugCard(
-                                  onTap: () {},
+                                  onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => DrugDetailsScreen(
+                                        drug: drug,
+                                      ),
+                                    ),
+                                  ),
                                   drug: drug,
                                 ),
                               ),
