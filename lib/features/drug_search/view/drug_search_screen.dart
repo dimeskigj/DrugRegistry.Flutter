@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_drug_registry/features/drug_search/drug_search.dart';
+import 'package:flutter_drug_registry/features/drug_search/view/drug_card.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/suggestion_list.dart';
 
 class DrugSearchScreen extends StatefulWidget {
@@ -25,8 +26,10 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
     final drugSearchBloc = context.read<DrugSearchBloc>();
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             SearchAnchor(
               searchController: _searchController,
@@ -37,7 +40,8 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                 _searchController.closeView(null);
                 _focusNode.unfocus();
               },
-              dividerColor: Theme.of(context).colorScheme.onSurface,
+              dividerColor:
+                  Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               builder: (_, __) {
                 return Container(
                   color: Theme.of(context).scaffoldBackgroundColor,
@@ -68,10 +72,11 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
               viewBuilder: (_) {
                 return BlocBuilder<DrugSearchBloc, DrugSearchState>(
                   builder: (context, state) => switch (state) {
-                    DrugSearchInitial() => Container(),
                     DrugSearchLoadInProgress() => const Align(
                         alignment: Alignment.topCenter,
-                        child: LinearProgressIndicator(),
+                        child: LinearProgressIndicator(
+                          backgroundColor: Colors.transparent,
+                        ),
                       ),
                     DrugSearchLoadSuccess() => DrugSuggestionList(
                         drugs: state.drugs,
@@ -84,27 +89,45 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                           _focusNode.unfocus();
                         },
                       ),
-                    DrugSearchLoadFail() => Container(),
+                    _ => Container(),
                   },
                 );
               },
               suggestionsBuilder: (_, __) => [],
             ),
-            Expanded(
-              child: BlocBuilder<DrugSearchBloc, DrugSearchState>(
-                builder: (context, state) => switch (state) {
-                  DrugSearchInitial() => Container(),
-                  DrugSearchLoadInProgress() => const Align(
-                      alignment: Alignment.topCenter,
-                      child: LinearProgressIndicator(),
+            BlocBuilder<DrugSearchBloc, DrugSearchState>(
+              builder: (_, state) => switch (state) {
+                DrugSearchLoadInProgress() => const Align(
+                    alignment: Alignment.topCenter,
+                    child: LinearProgressIndicator(
+                      backgroundColor: Colors.transparent,
                     ),
-                  DrugSearchLoadSuccess() => DrugSuggestionList(
-                      drugs: state.drugs,
-                      onTileTap: (d) {},
+                  ),
+                DrugSearchLoadSuccess() => Expanded(
+                    child: ListView(
+                      children: [
+                        ...state.drugs
+                            .map(
+                              (drug) => Container(
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                  horizontal: 16,
+                                ),
+                                child: DrugCard(
+                                  onTap: () {},
+                                  drug: drug,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        Container(
+                          height: 100,
+                        ),
+                      ],
                     ),
-                  DrugSearchLoadFail() => Container(),
-                },
-              ),
+                  ),
+                _ => Container(),
+              },
             ),
           ],
         ),

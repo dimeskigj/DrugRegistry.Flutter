@@ -23,6 +23,7 @@ class DrugSuggestionList extends StatelessWidget {
                 onTap: () => onTileTap(d),
                 child: ListTile(
                   key: Key(d.genericName + d.latinName),
+                  leading: const Icon(Icons.search),
                   title: Text(
                     d.latinName,
                   ),

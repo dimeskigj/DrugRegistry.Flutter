@@ -15,6 +15,8 @@ class MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
+        elevation: 10,
+        shadowColor: Theme.of(context).shadowColor,
         selectedIndex: currentPageIndex,
         onDestinationSelected: (value) => setState(() {
           currentPageIndex = value;
