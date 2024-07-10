@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/drug_search_screen.dart';
+import 'package:flutter_drug_registry/features/favorites/view/favorites_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -42,7 +43,7 @@ class MainScreenState extends State<MainScreen> {
       body: const [
         DrugSearchScreen(),
         Placeholder(),
-        Placeholder(),
+        FavoritesScreen(),
       ][currentPageIndex],
     );
   }
