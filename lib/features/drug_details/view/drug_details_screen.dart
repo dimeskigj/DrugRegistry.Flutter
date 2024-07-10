@@ -281,11 +281,11 @@ class _DrugDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: theme.textTheme.bodyLarge,
+        style: theme.textTheme.bodyMedium,
         children: [
           TextSpan(
             text: '$dataPointName: ',
-            style: theme.textTheme.bodyLarge?.copyWith(
+            style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
