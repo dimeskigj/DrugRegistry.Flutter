@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_drug_registry/features/drug_details/view/drug_details_screen.dart';
+import 'package:flutter_drug_registry/features/drug_search/bloc/drug_search_bloc.dart';
 import 'package:flutter_drug_registry/features/drug_search/drug_search.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/drug_card.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/suggestion_list.dart';
@@ -88,6 +89,16 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                           _searchController.closeView(null);
                           _searchController.text = d.latinName;
                           _focusNode.unfocus();
+
+                          if (d.drugs.length == 1) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => DrugDetailsScreen(
+                                  drug: d.drugs.first,
+                                ),
+                              ),
+                            );
+                          }
                         },
                       ),
                     _ => Container(),
