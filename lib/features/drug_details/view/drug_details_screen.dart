@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/core/extensions/issuing_type_extensions.dart';
 import 'package:flutter_drug_registry/core/models/drug.dart';
-import 'package:flutter_drug_registry/features/drug_details/view/curved_divider.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -60,16 +59,45 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.atc != null)
               Container(
                 margin: defaultInsets,
-                child: Text(
-                  drug.atc!,
-                  style: theme.textTheme.titleMedium,
+                child: Row(
+                  children: [
+                    Text(
+                      drug.atc!,
+                      style: theme.textTheme.titleMedium,
+                    ),
+                  ],
                 ),
               ),
-            Container(
-              margin: defaultInsets,
-              child: Text(drug.issuingType?.getDetails() ?? ''),
+            if (drug.issuingType != null)
+              Container(
+                margin: defaultInsets,
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 13,
+                      child: Text(
+                        drug.issuingType!.getSymbol(),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onPrimary,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Text(
+                        drug.issuingType!.getDetails(),
+                        overflow: TextOverflow.clip,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            // const CurvedDivider(),
+            const SizedBox(
+              height: 30,
             ),
-            const CurvedDivider(),
             if (drug.pharmaceuticalForm != null)
               Container(
                 margin: defaultInsets,
@@ -97,7 +125,7 @@ class DrugDetailsScreen extends StatelessWidget {
                   dataPoint: drug.packaging!,
                 ),
               ),
-            if (drug.strength != null)
+            if (drug.strength != null && drug.packaging != drug.strength)
               Container(
                 margin: defaultInsets,
                 child: _DrugDetail(
@@ -106,61 +134,6 @@ class DrugDetailsScreen extends StatelessWidget {
                   dataPoint: drug.strength!,
                 ),
               ),
-            if (drug.manualUrl != null || drug.reportUrl != null)
-              const CurvedDivider(),
-            if (drug.manualUrl != null || drug.reportUrl != null)
-              Container(
-                margin: defaultInsets.copyWith(bottom: 5),
-                child: Text(
-                  'Документи:',
-                  style: theme.textTheme.titleMedium,
-                ),
-              ),
-            if (drug.manualUrl != null)
-              InkWell(
-                onTap: () => launchUrl(drug.manualUrl!),
-                child: Container(
-                  margin: defaultInsets.copyWith(top: 10, bottom: 10),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.description,
-                        color: theme.primaryColor,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Упатство за употреба',
-                        style: theme.textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            if (drug.reportUrl != null)
-              InkWell(
-                onTap: () => launchUrl(drug.reportUrl!),
-                child: Container(
-                  margin: defaultInsets.copyWith(top: 10, bottom: 10),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.description,
-                        color: theme.primaryColor,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Збирен извештај',
-                        style: theme.textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            const CurvedDivider(),
             Container(
               margin: defaultInsets,
               child: _DrugDetail(
@@ -177,7 +150,6 @@ class DrugDetailsScreen extends StatelessWidget {
                 dataPoint: drug.priceWithoutVat?.toString() ?? 'Недефинирана',
               ),
             ),
-            const CurvedDivider(),
             if (drug.manufacturer != null)
               Container(
                 margin: defaultInsets,
@@ -224,6 +196,53 @@ class DrugDetailsScreen extends StatelessWidget {
                   dataPointName: 'Датум на валидност',
                   dataPoint: DateFormat('yyyy/MM/dd').format(
                     drug.validityDate!,
+                  ),
+                ),
+              ),
+            const SizedBox(
+              height: 20,
+            ),
+            if (drug.manualUrl != null)
+              InkWell(
+                onTap: () => launchUrl(drug.manualUrl!),
+                child: Container(
+                  margin: defaultInsets.copyWith(top: 10, bottom: 10),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.description,
+                        color: theme.primaryColor,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Упатство за употреба',
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            if (drug.reportUrl != null)
+              InkWell(
+                onTap: () => launchUrl(drug.reportUrl!),
+                child: Container(
+                  margin: defaultInsets.copyWith(top: 10, bottom: 10),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.description,
+                        color: theme.primaryColor,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Збирен извештај',
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                    ],
                   ),
                 ),
               ),
