@@ -5,14 +5,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_drug_registry/core/models/drug.dart';
 import 'package:flutter_drug_registry/core/models/drug_group.dart';
 import 'package:flutter_drug_registry/core/services/drug_service.dart';
-import 'package:rxdart/transformers.dart';
+import 'package:flutter_drug_registry/core/utils/bloc_utils.dart';
 
 part 'drug_search_event.dart';
 part 'drug_search_state.dart';
-
-EventTransformer<T> debounce<T>(Duration duration) {
-  return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
-}
 
 class DrugSearchBloc extends Bloc<DrugSearchEvent, DrugSearchState> {
   late final DrugService _drugService;
