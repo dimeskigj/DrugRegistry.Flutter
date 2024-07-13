@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/drug_search_screen.dart';
-import 'package:flutter_drug_registry/features/favorites/view/favorites_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -33,17 +32,11 @@ class MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.health_and_safety_outlined),
             label: 'Аптеки',
           ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.bookmark),
-            icon: Icon(Icons.bookmark_outline),
-            label: 'Зачувани',
-          ),
         ],
       ),
       body: const [
         DrugSearchScreen(),
         Placeholder(),
-        FavoritesScreen(),
       ][currentPageIndex],
     );
   }
