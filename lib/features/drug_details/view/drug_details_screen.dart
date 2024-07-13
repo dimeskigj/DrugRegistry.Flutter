@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/core/extensions/issuing_type_extensions.dart';
 import 'package:flutter_drug_registry/core/models/drug.dart';
+import 'package:flutter_drug_registry/widgets/data_point_display.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -101,7 +102,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.pharmaceuticalForm != null)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Фармацевтска форма',
                   dataPoint: drug.pharmaceuticalForm!,
@@ -110,7 +111,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.ingredients != null)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Состав',
                   dataPoint: drug.ingredients!,
@@ -119,7 +120,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.packaging != null)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Пакување',
                   dataPoint: drug.packaging!,
@@ -128,7 +129,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.strength != null && drug.packaging != drug.strength)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Јачина',
                   dataPoint: drug.strength!,
@@ -136,7 +137,7 @@ class DrugDetailsScreen extends StatelessWidget {
               ),
             Container(
               margin: defaultInsets,
-              child: _DrugDetail(
+              child: DataPointDisplay(
                 theme: theme,
                 dataPointName: 'Цена со ДДВ',
                 dataPoint: drug.priceWithVat?.toString() ?? 'Недефинирана',
@@ -144,7 +145,7 @@ class DrugDetailsScreen extends StatelessWidget {
             ),
             Container(
               margin: defaultInsets,
-              child: _DrugDetail(
+              child: DataPointDisplay(
                 theme: theme,
                 dataPointName: 'Цена без ДДВ',
                 dataPoint: drug.priceWithoutVat?.toString() ?? 'Недефинирана',
@@ -153,7 +154,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.manufacturer != null)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Производител',
                   dataPoint: drug.manufacturer!,
@@ -162,7 +163,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.approvalCarrier != null)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Носител на одобрение',
                   dataPoint: drug.approvalCarrier!,
@@ -171,7 +172,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.decisionNumber != null)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Број на одлука',
                   dataPoint: drug.decisionNumber!,
@@ -180,7 +181,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.decisionDate != null)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Датум на одлука',
                   dataPoint: DateFormat('yyyy/MM/dd').format(
@@ -191,7 +192,7 @@ class DrugDetailsScreen extends StatelessWidget {
             if (drug.validityDate != null)
               Container(
                 margin: defaultInsets,
-                child: _DrugDetail(
+                child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Датум на валидност',
                   dataPoint: DateFormat('yyyy/MM/dd').format(
@@ -280,38 +281,6 @@ class DrugDetailsScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _DrugDetail extends StatelessWidget {
-  const _DrugDetail({
-    required this.theme,
-    required this.dataPointName,
-    required this.dataPoint,
-  });
-
-  final ThemeData theme;
-  final String dataPointName;
-  final String dataPoint;
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        style: theme.textTheme.bodyMedium,
-        children: [
-          TextSpan(
-            text: '$dataPointName: ',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          TextSpan(
-            text: dataPoint,
-          ),
-        ],
       ),
     );
   }
