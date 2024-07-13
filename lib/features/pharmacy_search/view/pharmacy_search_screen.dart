@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_drug_registry/features/pharmacy_details/pharmacy_deatils.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/bloc/pharmacy_search_bloc.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/view/pharmacy_card.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/view/pharmacy_suggestion_list.dart';
@@ -82,14 +83,13 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                           _searchController.text = pharmacy.name ?? '';
                           _focusNode.unfocus();
 
-                          // TODO: navigate to pharmacy details
-                          // Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (_) => DrugDetailsScreen(
-                          //       drug: d.drugs.first,
-                          //     ),
-                          //   ),
-                          // );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => PharmacyDetailsScreen(
+                                pharmacy: pharmacy,
+                              ),
+                            ),
+                          );
                         },
                       ),
                     _ => Container(),
@@ -119,8 +119,9 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                                 child: PharmacyCard(
                                   onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      // TODO: navigate to pharmacy details
-                                      builder: (_) => const Placeholder(),
+                                      builder: (_) => PharmacyDetailsScreen(
+                                        pharmacy: pharmacy,
+                                      ),
                                     ),
                                   ),
                                   pharmacy: pharmacy,
