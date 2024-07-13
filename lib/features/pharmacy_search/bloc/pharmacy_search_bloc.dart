@@ -12,6 +12,7 @@ part 'pharmacy_search_state.dart';
 class PharmacySearchBloc
     extends Bloc<PharmacySearchEvent, PharmacySearchState> {
   late final PharmacyService _pharmacyService;
+  String _lastQuery = '';
 
   PharmacySearchBloc(
     PharmacyService? pharmacyService,
@@ -21,23 +22,50 @@ class PharmacySearchBloc
     on<PharmacySearchQuerySubmitted>(_onQuerySubmitted);
     on<PharmacySearchQueryChanged>(
       _onQueryChanged,
-      transformer: debounce(const Duration(milliseconds: 300)),
+      transformer: debounce(
+        const Duration(
+          milliseconds: 300,
+        ),
+      ),
     );
     on<PharamcySearchSuggestionsTapped>(_onSuggestionTapped);
   }
 
-  Future _onQuerySubmitted(
+  Future<void> _onQuerySubmitted(
     PharmacySearchQuerySubmitted event,
     Emitter<PharmacySearchState> emit,
-  ) async {}
+  ) async {
+    await _queryPharmacies(event.query, emit);
+  }
 
-  Future _onQueryChanged(
+  Future<void> _onQueryChanged(
     PharmacySearchQueryChanged event,
     Emitter<PharmacySearchState> emit,
-  ) async {}
+  ) async {
+    await _queryPharmacies(event.query, emit);
+  }
 
   void _onSuggestionTapped(
     PharamcySearchSuggestionsTapped event,
     Emitter<PharmacySearchState> emit,
   ) {}
+
+  Future<void> _queryPharmacies(
+      String query, Emitter<PharmacySearchState> emit) async {
+    try {
+      if (_lastQuery == query) return;
+      _lastQuery = query;
+
+      if (query == '') {
+        emit(const PharmacySearchLoadSuccess([]));
+        return;
+      }
+
+      emit(PharmacySearchLoadInProgress());
+      var results = await _pharmacyService.searchPharmacies(query, size: 50);
+      emit(PharmacySearchLoadSuccess(results.data.toList()));
+    } catch (_) {
+      emit(PharmacySearchLoadFail());
+    }
+  }
 }
