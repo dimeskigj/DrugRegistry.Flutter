@@ -25,8 +25,8 @@ class PharmacySearchQuerySubmitted extends PharmacySearchEvent {
   List<Object> get props => [query];
 }
 
-class PharamcySearchSuggestionsTapped extends PharmacySearchEvent {
-  const PharamcySearchSuggestionsTapped(this.pharmacy);
+class PharmacySearchSuggestionTapped extends PharmacySearchEvent {
+  const PharmacySearchSuggestionTapped(this.pharmacy);
 
   final Pharmacy pharmacy;
 

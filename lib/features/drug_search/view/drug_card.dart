@@ -24,13 +24,26 @@ class DrugCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                drug.latinName!,
-                style: theme.textTheme.titleMedium,
-              ),
-              Text(
-                drug.genericName!,
-                style: theme.textTheme.titleSmall,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(Icons.medication_rounded, color: theme.primaryColor),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        drug.latinName!,
+                        style: theme.textTheme.titleMedium,
+                      ),
+                      Text(
+                        drug.genericName!,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
+                ],
               ),
               Divider(
                 color: theme.colorScheme.onSurface.withOpacity(0.5),

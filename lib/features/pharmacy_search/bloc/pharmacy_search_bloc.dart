@@ -28,7 +28,7 @@ class PharmacySearchBloc
         ),
       ),
     );
-    on<PharamcySearchSuggestionsTapped>(_onSuggestionTapped);
+    on<PharmacySearchSuggestionTapped>(_onSuggestionTapped);
   }
 
   Future<void> _onQuerySubmitted(
@@ -46,9 +46,11 @@ class PharmacySearchBloc
   }
 
   void _onSuggestionTapped(
-    PharamcySearchSuggestionsTapped event,
+    PharmacySearchSuggestionTapped event,
     Emitter<PharmacySearchState> emit,
-  ) {}
+  ) {
+    emit(PharmacySearchLoadSuccess([event.pharmacy]));
+  }
 
   Future<void> _queryPharmacies(
       String query, Emitter<PharmacySearchState> emit) async {
