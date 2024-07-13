@@ -8,6 +8,7 @@ import 'package:flutter_drug_registry/drug_registry_observer.dart';
 import 'package:flutter_drug_registry/features/drug_details/cubit/drug_details_cubit.dart';
 import 'package:flutter_drug_registry/features/drug_search/bloc/drug_search_bloc.dart';
 import 'package:flutter_drug_registry/features/main/view/main_screen.dart';
+import 'package:flutter_drug_registry/features/pharmacy_search/bloc/pharmacy_search_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 void main() async {
@@ -38,6 +39,9 @@ void main() async {
       BlocProvider<DrugDetailsCubit>(
         create: (_) => DrugDetailsCubit(),
       ),
+      BlocProvider<PharmacySearchBloc>(
+        create: (_) => PharmacySearchBloc(GetIt.I.get<PharmacyService>()),
+      )
     ],
     child: const MyApp(),
   ));

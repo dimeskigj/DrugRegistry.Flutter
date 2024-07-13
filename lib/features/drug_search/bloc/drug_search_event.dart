@@ -8,36 +8,36 @@ sealed class DrugSearchEvent extends Equatable {
 }
 
 class DrugSearchQueryChanged extends DrugSearchEvent {
-  final String query;
-
   const DrugSearchQueryChanged({required this.query});
+
+  final String query;
 
   @override
   List<Object> get props => [query];
 }
 
 class DrugSearchQuerySubmitted extends DrugSearchEvent {
-  final String query;
-
   const DrugSearchQuerySubmitted({required this.query});
+
+  final String query;
 
   @override
   List<Object> get props => [query];
 }
 
 class DrugSearchSuggestionTapped extends DrugSearchEvent {
-  final DrugGroup drugGroup;
-
   const DrugSearchSuggestionTapped({required this.drugGroup});
+
+  final DrugGroup drugGroup;
 
   @override
   List<Object> get props => [drugGroup];
 }
 
 class DrugSearchDrugTapped extends DrugSearchEvent {
-  final Drug drug;
-
   const DrugSearchDrugTapped({required this.drug});
+
+  final Drug drug;
 
   @override
   List<Object> get props => [drug.id];
