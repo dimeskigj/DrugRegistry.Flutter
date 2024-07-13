@@ -30,18 +30,20 @@ class DrugCard extends StatelessWidget {
                 children: [
                   Icon(Icons.medication_rounded, color: theme.primaryColor),
                   const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        drug.latinName!,
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      Text(
-                        drug.genericName!,
-                        style: theme.textTheme.titleSmall,
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          drug.latinName!,
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        Text(
+                          drug.genericName!,
+                          style: theme.textTheme.titleSmall,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
