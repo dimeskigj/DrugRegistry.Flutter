@@ -42,14 +42,30 @@ class DrugSuggestionList extends StatelessWidget {
   }
 
   List<DrugGroup> _groupDrugs(List<Drug> drugs) {
-    var groupedDrugs = groupBy(drugs, (d) => (d.genericName, d.latinName));
+    var orderedDrugs = Iterable.generate(drugs.length).map(
+      (index) => (
+        index,
+        drugs[index],
+      ),
+    );
+
+    var groupedDrugs = groupBy(
+      orderedDrugs,
+      (d) => (d.$2.genericName, d.$2.latinName),
+    );
 
     return groupedDrugs.keys
+        .sorted(
+          (key1, key2) => (groupedDrugs[key1]?.first.$1 as int)
+              .compareTo(groupedDrugs[key2]?.first.$1 as int),
+        )
+        .map((key) => groupedDrugs[key]!.map((tuple) => tuple.$2))
+        .where((drugs) => drugs.isNotEmpty)
         .map(
-          (key) => DrugGroup(
-            genericName: key.$1 ?? '',
-            latinName: key.$2 ?? '',
-            drugs: groupedDrugs[key] ?? [],
+          (drugs) => DrugGroup(
+            genericName: drugs.first.genericName ?? '',
+            latinName: drugs.first.latinName ?? '',
+            drugs: drugs.toList(),
           ),
         )
         .where((groupedDrug) => groupedDrug.drugs.isNotEmpty)
