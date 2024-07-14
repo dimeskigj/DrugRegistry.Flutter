@@ -24,6 +24,14 @@ class DrugSuggestionList extends StatelessWidget {
                 child: ListTile(
                   key: Key(d.genericName + d.latinName),
                   leading: const Icon(Icons.search),
+                  trailing: d.drugs.length > 1
+                      ? CircleAvatar(
+                          radius: 12,
+                          child: Text(
+                            d.drugs.length.toString(),
+                          ),
+                        )
+                      : const SizedBox(),
                   title: Text(
                     d.latinName,
                   ),
