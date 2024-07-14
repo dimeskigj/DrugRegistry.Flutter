@@ -109,41 +109,70 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
             ),
             BlocBuilder<DrugSearchBloc, DrugSearchState>(
               builder: (_, state) => switch (state) {
+                DrugSearchInitial() => Expanded(
+                    child: Center(
+                      child: CircleAvatar(
+                        radius: 40,
+                        child: Icon(
+                          Icons.medication_rounded,
+                          size: 50,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          shadows: [
+                            BoxShadow(
+                              blurRadius: 20,
+                              color: Theme.of(context)
+                                  .shadowColor
+                                  .withOpacity(0.2),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 DrugSearchLoadInProgress() => const Align(
                     alignment: Alignment.topCenter,
                     child: LinearProgressIndicator(
                       backgroundColor: Colors.transparent,
                     ),
                   ),
-                DrugSearchLoadSuccess() => Expanded(
-                    child: ListView(
-                      children: [
-                        ...state.drugs
-                            .map(
-                              (drug) => Container(
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 4,
-                                  horizontal: 16,
-                                ),
-                                child: DrugCard(
-                                  onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => DrugDetailsScreen(
-                                        drug: drug,
+                DrugSearchLoadFail() => const Align(
+                    alignment: Alignment.topCenter,
+                    child: Text('Нешто тргна наопаку, пробај пак...'),
+                  ),
+                DrugSearchLoadSuccess() => state.drugs.isEmpty
+                    ? const Align(
+                        alignment: Alignment.topCenter,
+                        child: Text('Нема резултат од пребарувањето.'),
+                      )
+                    : Expanded(
+                        child: ListView(
+                          children: [
+                            ...state.drugs
+                                .map(
+                                  (drug) => Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 4,
+                                      horizontal: 16,
+                                    ),
+                                    child: DrugCard(
+                                      onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => DrugDetailsScreen(
+                                            drug: drug,
+                                          ),
+                                        ),
                                       ),
+                                      drug: drug,
                                     ),
                                   ),
-                                  drug: drug,
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        Container(
-                          height: 100,
+                                )
+                                .toList(),
+                            Container(
+                              height: 100,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
                 _ => Container(),
               },
             ),

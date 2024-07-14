@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_drug_registry/features/pharmacy_details/pharmacy_deatils.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/bloc/pharmacy_search_bloc.dart';
+import 'package:flutter_drug_registry/features/pharmacy_search/pharmacy_search.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/view/pharmacy_card.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/view/pharmacy_suggestion_list.dart';
 
@@ -100,41 +101,70 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
             ),
             BlocBuilder<PharmacySearchBloc, PharmacySearchState>(
               builder: (_, state) => switch (state) {
+                PharmacySearchInitial() => Expanded(
+                    child: Center(
+                      child: CircleAvatar(
+                        radius: 40,
+                        child: Icon(
+                          Icons.health_and_safety_rounded,
+                          size: 50,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          shadows: [
+                            BoxShadow(
+                              blurRadius: 20,
+                              color: Theme.of(context)
+                                  .shadowColor
+                                  .withOpacity(0.2),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                PharmacySearchLoadFail() => const Align(
+                    alignment: Alignment.topCenter,
+                    child: Text('Нешто тргна наопаку, пробај пак...'),
+                  ),
                 PharmacySearchLoadInProgress() => const Align(
                     alignment: Alignment.topCenter,
                     child: LinearProgressIndicator(
                       backgroundColor: Colors.transparent,
                     ),
                   ),
-                PharmacySearchLoadSuccess() => Expanded(
-                    child: ListView(
-                      children: [
-                        ...state.pharmacies
-                            .map(
-                              (pharmacy) => Container(
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 4,
-                                  horizontal: 16,
-                                ),
-                                child: PharmacyCard(
-                                  onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => PharmacyDetailsScreen(
-                                        pharmacy: pharmacy,
+                PharmacySearchLoadSuccess() => state.pharmacies.isEmpty
+                    ? const Align(
+                        alignment: Alignment.topCenter,
+                        child: Text('Нема резултат од пребарувањето.'),
+                      )
+                    : Expanded(
+                        child: ListView(
+                          children: [
+                            ...state.pharmacies
+                                .map(
+                                  (pharmacy) => Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 4,
+                                      horizontal: 16,
+                                    ),
+                                    child: PharmacyCard(
+                                      onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => PharmacyDetailsScreen(
+                                            pharmacy: pharmacy,
+                                          ),
+                                        ),
                                       ),
+                                      pharmacy: pharmacy,
                                     ),
                                   ),
-                                  pharmacy: pharmacy,
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        Container(
-                          height: 100,
+                                )
+                                .toList(),
+                            Container(
+                              height: 100,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
                 _ => Container(),
               },
             ),

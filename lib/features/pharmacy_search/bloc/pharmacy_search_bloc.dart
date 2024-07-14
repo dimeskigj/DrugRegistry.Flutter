@@ -35,7 +35,7 @@ class PharmacySearchBloc
     PharmacySearchQuerySubmitted event,
     Emitter<PharmacySearchState> emit,
   ) async {
-    await _queryPharmacies(event.query, emit);
+    await _queryPharmacies(event.query, emit, shouldReQuery: true);
   }
 
   Future<void> _onQueryChanged(
@@ -53,9 +53,9 @@ class PharmacySearchBloc
   }
 
   Future<void> _queryPharmacies(
-      String query, Emitter<PharmacySearchState> emit) async {
+      String query, Emitter<PharmacySearchState> emit, {bool shouldReQuery = false,}) async {
     try {
-      if (_lastQuery == query) return;
+      if (_lastQuery == query && !shouldReQuery) return;
       _lastQuery = query;
 
       if (query == '') {

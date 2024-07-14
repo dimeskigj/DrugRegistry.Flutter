@@ -36,12 +36,16 @@ class DrugSearchBloc extends Bloc<DrugSearchEvent, DrugSearchState> {
     DrugSearchQuerySubmitted event,
     Emitter<DrugSearchState> emit,
   ) async {
-    await _queryDrugs(event.query, emit);
+    await _queryDrugs(event.query, emit, shouldReQuery: true);
   }
 
-  Future<void> _queryDrugs(String query, Emitter<DrugSearchState> emit) async {
+  Future<void> _queryDrugs(
+    String query,
+    Emitter<DrugSearchState> emit, {
+    bool shouldReQuery = false,
+  }) async {
     try {
-      if (_lastQuery == query) return;
+      if (_lastQuery == query && !shouldReQuery) return;
       _lastQuery = query;
 
       if (query == '') {
