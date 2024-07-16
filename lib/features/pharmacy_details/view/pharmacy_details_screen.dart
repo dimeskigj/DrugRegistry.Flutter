@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/core/models/pharmacy.dart';
 import 'package:flutter_drug_registry/widgets/data_point_display.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class PharmacyDetailsScreen extends StatelessWidget {
