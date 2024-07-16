@@ -33,11 +33,17 @@ class MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.health_and_safety_outlined),
             label: 'Аптеки',
           ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.info),
+            icon: Icon(Icons.info_outlined),
+            label: 'Инфо',
+          ),
         ],
       ),
       body: const [
         DrugSearchScreen(),
         PharmacySearchScreen(),
+        Placeholder(),
       ][currentPageIndex],
     );
   }
