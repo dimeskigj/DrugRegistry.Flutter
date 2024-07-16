@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_drug_registry/constants.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/drug_search_screen.dart';
+import 'package:flutter_drug_registry/features/information/information.dart';
 import 'package:flutter_drug_registry/features/main/main.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/pharmacy_search.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -59,7 +60,7 @@ class MainScreenState extends State<MainScreen> {
         child: const [
           DrugSearchScreen(),
           PharmacySearchScreen(),
-          Placeholder(),
+          InformationScreen(),
         ][currentPageIndex],
       ),
     );
