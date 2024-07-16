@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const _themeKey = 'theme';
 const _savedDrugsKey = 'saved-drugs';
 const _savedPharmaciesKey = 'saved-pharmacies';
+const _isFirstTimeKey = 'is-first-time';
 
 class SharedPreferencesService {
   late final SharedPreferences _prefs;
@@ -26,4 +27,9 @@ class SharedPreferencesService {
 
   Future<bool> setSavedPharmaciesIds(List<String> value) =>
       _prefs.setStringList(_savedPharmaciesKey, value);
+
+  bool? getIsFirstTime() => _prefs.getBool(_isFirstTimeKey);
+
+  Future<bool> setIsFirstTime(bool value) async =>
+      await _prefs.setBool(_isFirstTimeKey, value);
 }
