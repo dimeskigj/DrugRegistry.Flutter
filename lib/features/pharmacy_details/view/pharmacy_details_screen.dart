@@ -24,15 +24,6 @@ class PharmacyDetailsScreen extends StatelessWidget {
         title: Text(
           pharmacy.name!,
         ),
-        actions: [
-          if (pharmacy.url != null)
-            IconButton(
-              onPressed: () => launchUrl(pharmacy.url!),
-              icon: const Icon(
-                Icons.open_in_new,
-              ),
-            ),
-        ],
       ),
       backgroundColor: theme.colorScheme.surface,
       body: SingleChildScrollView(
