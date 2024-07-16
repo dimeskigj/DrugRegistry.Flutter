@@ -8,7 +8,6 @@ import 'package:flutter_drug_registry/features/main/main.dart';
 import 'package:flutter_drug_registry/observer.dart';
 import 'package:flutter_drug_registry/features/drug_details/cubit/drug_details_cubit.dart';
 import 'package:flutter_drug_registry/features/drug_search/bloc/drug_search_bloc.dart';
-import 'package:flutter_drug_registry/features/main/view/main_screen.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/bloc/pharmacy_search_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -32,23 +31,27 @@ void main() async {
 
   Bloc.observer = DrugRegistryBlocObserver();
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider<DrugSearchBloc>(
-        create: (_) => DrugSearchBloc(GetIt.I.get<DrugService>()),
-      ),
-      BlocProvider<DrugDetailsCubit>(
-        create: (_) => DrugDetailsCubit(),
-      ),
-      BlocProvider<PharmacySearchBloc>(
-        create: (_) => PharmacySearchBloc(GetIt.I.get<PharmacyService>()),
-      ),
-      BlocProvider<MainScreenCubit>(
-        create: (_) => MainScreenCubit(GetIt.I.get<SharedPreferencesService>()),
-      ),
-    ],
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<DrugSearchBloc>(
+          create: (_) => DrugSearchBloc(GetIt.I.get<DrugService>()),
+        ),
+        BlocProvider<DrugDetailsCubit>(
+          create: (_) => DrugDetailsCubit(),
+        ),
+        BlocProvider<PharmacySearchBloc>(
+          create: (_) => PharmacySearchBloc(GetIt.I.get<PharmacyService>()),
+        ),
+        BlocProvider<MainScreenCubit>(
+          create: (_) => MainScreenCubit(
+            GetIt.I.get<SharedPreferencesService>(),
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
