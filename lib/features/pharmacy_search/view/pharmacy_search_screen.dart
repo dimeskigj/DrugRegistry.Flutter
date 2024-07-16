@@ -101,26 +101,6 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
             ),
             BlocBuilder<PharmacySearchBloc, PharmacySearchState>(
               builder: (_, state) => switch (state) {
-                PharmacySearchInitial() => Expanded(
-                    child: Center(
-                      child: CircleAvatar(
-                        radius: 40,
-                        child: Icon(
-                          Icons.health_and_safety_rounded,
-                          size: 50,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          shadows: [
-                            BoxShadow(
-                              blurRadius: 20,
-                              color: Theme.of(context)
-                                  .shadowColor
-                                  .withOpacity(0.2),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                 PharmacySearchLoadFail() => const Align(
                     alignment: Alignment.topCenter,
                     child: Text('Нешто тргна наопаку, пробај пак...'),

@@ -109,26 +109,6 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
             ),
             BlocBuilder<DrugSearchBloc, DrugSearchState>(
               builder: (_, state) => switch (state) {
-                DrugSearchInitial() => Expanded(
-                    child: Center(
-                      child: CircleAvatar(
-                        radius: 40,
-                        child: Icon(
-                          Icons.medication_rounded,
-                          size: 50,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          shadows: [
-                            BoxShadow(
-                              blurRadius: 20,
-                              color: Theme.of(context)
-                                  .shadowColor
-                                  .withOpacity(0.2),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                 DrugSearchLoadInProgress() => const Align(
                     alignment: Alignment.topCenter,
                     child: LinearProgressIndicator(
