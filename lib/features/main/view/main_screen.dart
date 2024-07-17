@@ -19,9 +19,15 @@ class MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
 
   @override
-  Widget build(BuildContext context) {
-    context.read<MainScreenCubit>().checkIsFirstTime();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<MainScreenCubit>(context).checkIsFirstTime();
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         elevation: 10,

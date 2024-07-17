@@ -22,7 +22,6 @@ class MainScreenCubit extends Cubit<MainScreenCubitState> {
     if (!isFirstTime) return;
 
     emit(MainScreenFirstTime());
-    emit(MainScreenInitial());
   }
 
   Future<void> confirmFirstTimeDialog() async {
