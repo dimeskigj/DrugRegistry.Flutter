@@ -18,8 +18,15 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
   final _focusNode = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() => _focusNode.unfocus());
+  }
+
+  @override
   void dispose() {
     _searchController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -40,8 +47,15 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
               viewOnSubmitted: (value) {
                 drugSearchBloc.add(DrugSearchQuerySubmitted(query: value));
                 _searchController.closeView(null);
-                _focusNode.unfocus();
               },
+              viewLeading: IconButton(
+                onPressed: () {
+                  _searchController.closeView(null);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                ),
+              ),
               dividerColor:
                   Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               builder: (_, __) {
@@ -88,7 +102,6 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                           );
                           _searchController.closeView(null);
                           _searchController.text = d.latinName;
-                          _focusNode.unfocus();
 
                           if (d.drugs.length == 1) {
                             Navigator.of(context).push(
