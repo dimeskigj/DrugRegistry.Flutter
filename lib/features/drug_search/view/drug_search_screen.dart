@@ -68,6 +68,7 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                         _searchController.openView();
                       },
                       onChanged: (value) {
+                        drugSearchBloc.add(DrugSearchQueryChanged(query: value));
                         _searchController.openView();
                       },
                       leading: const Padding(

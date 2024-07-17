@@ -67,7 +67,8 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                       onTap: () {
                         _searchController.openView();
                       },
-                      onChanged: (_) {
+                      onChanged: (query) {
+                        pharmacySearchBloc.add(PharmacySearchQueryChanged(query));
                         _searchController.openView();
                       },
                       leading: const Padding(
