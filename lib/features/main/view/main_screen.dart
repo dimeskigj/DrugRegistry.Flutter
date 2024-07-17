@@ -48,9 +48,9 @@ class MainScreenState extends State<MainScreen> {
             label: 'Аптеки',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.info),
-            icon: Icon(Icons.info_outlined),
-            label: 'Инфо',
+            selectedIcon: Icon(Icons.info_rounded),
+            icon: Icon(Icons.info_outline_rounded),
+            label: 'Информации',
           ),
         ],
       ),
