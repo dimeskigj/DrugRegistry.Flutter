@@ -18,12 +18,6 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
   final _focusNode = FocusNode();
 
   @override
-  void initState() {
-    super.initState();
-    _focusNode.addListener(() => _focusNode.unfocus());
-  }
-
-  @override
   void dispose() {
     _searchController.dispose();
     _focusNode.dispose();
@@ -47,10 +41,12 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
               viewOnSubmitted: (value) {
                 drugSearchBloc.add(DrugSearchQuerySubmitted(query: value));
                 _searchController.closeView(null);
+                _focusNode.unfocus();
               },
               viewLeading: IconButton(
                 onPressed: () {
                   _searchController.closeView(null);
+                  _focusNode.unfocus();
                 },
                 icon: const Icon(
                   Icons.arrow_back,
@@ -65,16 +61,13 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: SearchBar(
                       hintText: "Пребарувај лекови",
-                      onChanged: (value) {
-                        drugSearchBloc.add(
-                          DrugSearchQueryChanged(query: value),
-                        );
-                        _searchController.openView();
-                      },
                       elevation: WidgetStateProperty.all(1),
                       focusNode: _focusNode,
                       controller: _searchController,
                       onTap: () {
+                        _searchController.openView();
+                      },
+                      onChanged: (value) {
                         _searchController.openView();
                       },
                       leading: const Padding(
@@ -102,6 +95,7 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                           );
                           _searchController.closeView(null);
                           _searchController.text = d.latinName;
+                          _focusNode.unfocus();
 
                           if (d.drugs.length == 1) {
                             Navigator.of(context).push(

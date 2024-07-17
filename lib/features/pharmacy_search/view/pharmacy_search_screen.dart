@@ -18,12 +18,6 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
   final _focusNode = FocusNode();
 
   @override
-  void initState() {
-    super.initState();
-    _focusNode.addListener(() => _focusNode.unfocus());
-  }
-
-  @override
   void dispose() {
     _searchController.dispose();
     _focusNode.dispose();
@@ -47,10 +41,12 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
               viewOnSubmitted: (value) {
                 pharmacySearchBloc.add(PharmacySearchQuerySubmitted(value));
                 _searchController.closeView(null);
+                _focusNode.unfocus();
               },
               viewLeading: IconButton(
                 onPressed: () {
                   _searchController.closeView(null);
+                  _focusNode.unfocus();
                 },
                 icon: const Icon(
                   Icons.arrow_back,
@@ -69,6 +65,9 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                       focusNode: _focusNode,
                       controller: _searchController,
                       onTap: () {
+                        _searchController.openView();
+                      },
+                      onChanged: (_) {
                         _searchController.openView();
                       },
                       leading: const Padding(
@@ -96,6 +95,7 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                           );
                           _searchController.closeView(null);
                           _searchController.text = pharmacy.name ?? '';
+                          _focusNode.unfocus();
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
