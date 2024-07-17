@@ -75,13 +75,17 @@ class InformationScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: Container(),
+            Divider(
+              color: theme.colorScheme.onSurface.withOpacity(0.5),
+              height: 0,
             ),
             OutlinedButton.icon(
               onPressed: () => launchUrlString('mailto:dimeskigj@gmail.com'),
-              label: const Text(
-                'Контакт',
+              label: const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Контакт',
+                ),
               ),
               icon: const Icon(
                 Icons.mail,
@@ -92,13 +96,17 @@ class InformationScreen extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(
                   vertical: 15,
+                  horizontal: 20,
                 ),
               ),
             ),
             OutlinedButton.icon(
               onPressed: () => launchUrlString(Constants.privacyPolicyUrl),
-              label: const Text(
-                'Политика за приватност',
+              label: const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Политика за приватност',
+                ),
               ),
               icon: const Icon(
                 Icons.launch,
@@ -109,6 +117,7 @@ class InformationScreen extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(
                   vertical: 15,
+                  horizontal: 20,
                 ),
               ),
             ),
