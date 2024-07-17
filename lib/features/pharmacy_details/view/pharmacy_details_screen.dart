@@ -162,7 +162,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
                 margin: defaultInsets,
                 child: DataPointDisplay(
                   theme: theme,
-                  dataPointName: 'Фрамацевти',
+                  dataPointName: 'Фармацевти',
                   dataPoint: pharmacy.pharmacists!,
                 ),
               ),
