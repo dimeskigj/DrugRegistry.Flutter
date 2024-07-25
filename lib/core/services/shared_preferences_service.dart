@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const _themeKey = 'theme';
 const _savedDrugsKey = 'saved-drugs';
 const _savedPharmaciesKey = 'saved-pharmacies';
+const _isFirstTimeKey = 'is-first-time';
 
 class SharedPreferencesService {
   late final SharedPreferences _prefs;
@@ -13,13 +14,22 @@ class SharedPreferencesService {
 
   bool? getIsLightTheme() => _prefs.getBool(_themeKey);
 
-  Future<bool> setIsLightTheme(bool value) async => await _prefs.setBool(_themeKey, value);
+  Future<bool> setIsLightTheme(bool value) async =>
+      await _prefs.setBool(_themeKey, value);
 
   List<String>? getSavedDrugsIds() => _prefs.getStringList(_savedDrugsKey);
 
-  Future<bool> setSavedDrugsIds(List<String> value) => _prefs.setStringList(_savedDrugsKey, value);
+  Future<bool> setSavedDrugsIds(List<String> value) =>
+      _prefs.setStringList(_savedDrugsKey, value);
 
-  List<String>? getSavedPharmaciesIds() => _prefs.getStringList(_savedPharmaciesKey);
+  List<String>? getSavedPharmaciesIds() =>
+      _prefs.getStringList(_savedPharmaciesKey);
 
-  Future<bool> setSavedPharmaciesIds(List<String> value) => _prefs.setStringList(_savedPharmaciesKey, value);
+  Future<bool> setSavedPharmaciesIds(List<String> value) =>
+      _prefs.setStringList(_savedPharmaciesKey, value);
+
+  bool? getIsFirstTime() => _prefs.getBool(_isFirstTimeKey);
+
+  Future<bool> setIsFirstTime(bool value) async =>
+      await _prefs.setBool(_isFirstTimeKey, value);
 }

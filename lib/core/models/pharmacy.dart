@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_drug_registry/core/models/location.dart';
 import 'package:flutter_drug_registry/core/models/pharmacy_type.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -5,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'pharmacy.g.dart';
 
 @JsonSerializable()
-class Pharmacy {
+class Pharmacy extends Equatable {
   final String id;
   final String? idNumber;
   final String? taxNumber;
@@ -26,10 +27,9 @@ class Pharmacy {
   final Location? location;
   final Uri? url;
   final DateTime? lastUpdate;
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  bool isBookmarked = false;
 
-  Pharmacy(this.id, {
+  const Pharmacy(
+    this.id, {
     this.idNumber,
     this.taxNumber,
     this.code,
@@ -51,7 +51,11 @@ class Pharmacy {
     this.lastUpdate,
   });
 
-  factory Pharmacy.fromJson(Map<String, dynamic> json) => _$PharmacyFromJson(json);
+  factory Pharmacy.fromJson(Map<String, dynamic> json) =>
+      _$PharmacyFromJson(json);
 
   Map<String, dynamic> toJson() => _$PharmacyToJson(this);
+
+  @override
+  List<Object?> get props => [id];
 }
