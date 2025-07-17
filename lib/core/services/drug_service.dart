@@ -28,7 +28,7 @@ class DrugService {
 
     final response = await http.get(url).timeout(_timeOut);
     response.ensureSuccessStatusCode();
-    
+
     final json = jsonDecode(response.body);
     return PagedResult<Drug>.fromJson(json);
   }

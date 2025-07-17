@@ -6,5 +6,5 @@ enum IssuingType {
   @JsonValue(1)
   prescriptionOnly,
   @JsonValue(2)
-  hospitalOnly
+  hospitalOnly,
 }

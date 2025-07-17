@@ -24,38 +24,28 @@ class DrugSuggestionList extends StatelessWidget {
                 child: ListTile(
                   key: Key(d.genericName + d.latinName),
                   leading: const Icon(Icons.search),
-                  trailing: d.drugs.length > 1
-                      ? CircleAvatar(
-                          radius: 12,
-                          child: Text(
-                            d.drugs.length.toString(),
-                          ),
-                        )
-                      : const SizedBox(),
-                  title: Text(
-                    d.latinName,
-                  ),
-                  subtitle: Text(
-                    d.genericName,
-                  ),
+                  trailing:
+                      d.drugs.length > 1
+                          ? CircleAvatar(
+                            radius: 12,
+                            child: Text(d.drugs.length.toString()),
+                          )
+                          : const SizedBox(),
+                  title: Text(d.latinName),
+                  subtitle: Text(d.genericName),
                 ),
               ),
             )
             .toList(),
-        Container(
-          height: 300,
-        ),
+        Container(height: 300),
       ],
     );
   }
 
   List<DrugGroup> _groupDrugs(List<Drug> drugs) {
-    var orderedDrugs = Iterable.generate(drugs.length).map(
-      (index) => (
-        index,
-        drugs[index],
-      ),
-    );
+    var orderedDrugs = Iterable.generate(
+      drugs.length,
+    ).map((index) => (index, drugs[index]));
 
     var groupedDrugs = groupBy(
       orderedDrugs,
@@ -64,8 +54,9 @@ class DrugSuggestionList extends StatelessWidget {
 
     return groupedDrugs.keys
         .sorted(
-          (key1, key2) => (groupedDrugs[key1]?.first.$1 as int)
-              .compareTo(groupedDrugs[key2]?.first.$1 as int),
+          (key1, key2) => (groupedDrugs[key1]?.first.$1 as int).compareTo(
+            groupedDrugs[key2]?.first.$1 as int,
+          ),
         )
         .map((key) => groupedDrugs[key]!.map((tuple) => tuple.$2))
         .where((drugs) => drugs.isNotEmpty)

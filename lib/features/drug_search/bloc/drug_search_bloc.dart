@@ -62,7 +62,9 @@ class DrugSearchBloc extends Bloc<DrugSearchEvent, DrugSearchState> {
   }
 
   void _onDrugSearchSuggestionTapped(
-      DrugSearchSuggestionTapped event, Emitter<DrugSearchState> emit) {
+    DrugSearchSuggestionTapped event,
+    Emitter<DrugSearchState> emit,
+  ) {
     emit(DrugSearchLoadSuccess(drugs: event.drugGroup.drugs));
   }
 }

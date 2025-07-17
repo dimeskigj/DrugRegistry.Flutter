@@ -20,7 +20,7 @@ class PharmacyService {
     final queryParameters = {
       'query': query,
       'page': page.toString(),
-      'size': size.toString()
+      'size': size.toString(),
     };
 
     if (municipality?.isNotEmpty ?? false) {
@@ -54,7 +54,7 @@ class PharmacyService {
       'lat': latitude.toString(),
       'lon': longitude.toString(),
       'page': page.toString(),
-      'size': size.toString()
+      'size': size.toString(),
     };
 
     if (municipality?.isNotEmpty ?? false) {

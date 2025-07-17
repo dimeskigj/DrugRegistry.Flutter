@@ -24,9 +24,7 @@ class DataPointDisplay extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          TextSpan(
-            text: dataPoint,
-          ),
+          TextSpan(text: dataPoint),
         ],
       ),
     );

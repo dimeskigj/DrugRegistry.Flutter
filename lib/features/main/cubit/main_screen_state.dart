@@ -8,4 +8,5 @@ sealed class MainScreenCubitState extends Equatable {
 }
 
 final class MainScreenInitial extends MainScreenCubitState {}
+
 final class MainScreenFirstTime extends MainScreenCubitState {}
