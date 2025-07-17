@@ -18,12 +18,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
         pharmacy.phoneNumber != null && pharmacy.phoneNumber!.length > 1;
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 75,
-        title: Text(
-          pharmacy.name!,
-        ),
-      ),
+      appBar: AppBar(toolbarHeight: 75, title: Text(pharmacy.name!)),
       backgroundColor: theme.colorScheme.surface,
       body: SingleChildScrollView(
         child: Column(
@@ -78,23 +73,15 @@ class PharmacyDetailsScreen extends StatelessWidget {
                   margin: defaultInsets.copyWith(top: 10, bottom: 10),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.mail,
-                        color: theme.primaryColor,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      Icon(Icons.mail, color: theme.primaryColor),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
                           pharmacy.email!,
                           style: theme.textTheme.bodyLarge,
                         ),
                       ),
-                      Icon(
-                        Icons.exit_to_app,
-                        color: theme.hintColor,
-                      ),
+                      Icon(Icons.exit_to_app, color: theme.hintColor),
                     ],
                   ),
                 ),
@@ -106,30 +93,20 @@ class PharmacyDetailsScreen extends StatelessWidget {
                   margin: defaultInsets.copyWith(top: 10, bottom: 10),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.phone,
-                        color: theme.primaryColor,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      Icon(Icons.phone, color: theme.primaryColor),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Text(
                           pharmacy.phoneNumber!,
                           style: theme.textTheme.bodyLarge,
                         ),
                       ),
-                      Icon(
-                        Icons.exit_to_app,
-                        color: theme.hintColor,
-                      ),
+                      Icon(Icons.exit_to_app, color: theme.hintColor),
                     ],
                   ),
                 ),
               ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             if (pharmacy.code != null)
               Container(
                 margin: defaultInsets,

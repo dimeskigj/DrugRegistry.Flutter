@@ -9,21 +9,19 @@ part of 'paged_result.dart';
 PagedResult<T> _$PagedResultFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
-) =>
-    PagedResult<T>(
-      (json['data'] as List<dynamic>).map(fromJsonT),
-      json['totalCount'] as int,
-      json['page'] as int,
-      json['size'] as int,
-    );
+) => PagedResult<T>(
+  (json['data'] as List<dynamic>).map(fromJsonT),
+  json['totalCount'] as int,
+  json['page'] as int,
+  json['size'] as int,
+);
 
 Map<String, dynamic> _$PagedResultToJson<T>(
   PagedResult<T> instance,
   Object? Function(T value) toJsonT,
-) =>
-    <String, dynamic>{
-      'data': instance.data.map(toJsonT).toList(),
-      'totalCount': instance.totalCount,
-      'page': instance.page,
-      'size': instance.size,
-    };
+) => <String, dynamic>{
+  'data': instance.data.map(toJsonT).toList(),
+  'totalCount': instance.totalCount,
+  'page': instance.page,
+  'size': instance.size,
+};

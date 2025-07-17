@@ -10,5 +10,5 @@ enum PharmacyType {
   @JsonValue(3)
   privateHealthInstitution,
   @JsonValue(4)
-  mobilePharmacy
+  mobilePharmacy,
 }

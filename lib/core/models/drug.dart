@@ -6,7 +6,7 @@ import 'issuing_type.dart';
 part 'drug.g.dart';
 
 @JsonSerializable()
-class Drug extends Equatable{
+class Drug extends Equatable {
   final String id;
   final String? decisionNumber;
   final String? atc;
@@ -54,7 +54,7 @@ class Drug extends Equatable{
   factory Drug.fromJson(Map<String, dynamic> json) => _$DrugFromJson(json);
 
   Map<String, dynamic> toJson() => _$DrugToJson(this);
-  
+
   @override
   List<Object?> get props => [id];
 }

@@ -19,16 +19,12 @@ class DrugDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 75,
-        title: Text(
-          drug.latinName!,
-        ),
+        title: Text(drug.latinName!),
         actions: [
           if (drug.url != null)
             IconButton(
               onPressed: () => launchUrl(drug.url!),
-              icon: const Icon(
-                Icons.open_in_new,
-              ),
+              icon: const Icon(Icons.open_in_new),
             ),
         ],
       ),
@@ -62,10 +58,7 @@ class DrugDetailsScreen extends StatelessWidget {
                 margin: defaultInsets,
                 child: Row(
                   children: [
-                    Text(
-                      drug.atc!,
-                      style: theme.textTheme.titleMedium,
-                    ),
+                    Text(drug.atc!, style: theme.textTheme.titleMedium),
                   ],
                 ),
               ),
@@ -83,9 +76,7 @@ class DrugDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         drug.issuingType!.getDetails(),
@@ -96,9 +87,7 @@ class DrugDetailsScreen extends StatelessWidget {
                 ),
               ),
             // const CurvedDivider(),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             if (drug.pharmaceuticalForm != null)
               Container(
                 margin: defaultInsets,
@@ -184,9 +173,9 @@ class DrugDetailsScreen extends StatelessWidget {
                 child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Датум на одлука',
-                  dataPoint: DateFormat('yyyy/MM/dd').format(
-                    drug.decisionDate!,
-                  ),
+                  dataPoint: DateFormat(
+                    'yyyy/MM/dd',
+                  ).format(drug.decisionDate!),
                 ),
               ),
             if (drug.validityDate != null)
@@ -195,14 +184,12 @@ class DrugDetailsScreen extends StatelessWidget {
                 child: DataPointDisplay(
                   theme: theme,
                   dataPointName: 'Датум на валидност',
-                  dataPoint: DateFormat('yyyy/MM/dd').format(
-                    drug.validityDate!,
-                  ),
+                  dataPoint: DateFormat(
+                    'yyyy/MM/dd',
+                  ).format(drug.validityDate!),
                 ),
               ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             if (drug.manualUrl != null)
               InkWell(
                 onTap: () => launchUrl(drug.manualUrl!),
@@ -210,13 +197,8 @@ class DrugDetailsScreen extends StatelessWidget {
                   margin: defaultInsets.copyWith(top: 10, bottom: 10),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.description,
-                        color: theme.primaryColor,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      Icon(Icons.description, color: theme.primaryColor),
+                      const SizedBox(width: 10),
                       Text(
                         'Упатство за употреба',
                         style: theme.textTheme.bodyLarge,
@@ -232,24 +214,14 @@ class DrugDetailsScreen extends StatelessWidget {
                   margin: defaultInsets.copyWith(top: 10, bottom: 10),
                   child: Row(
                     children: [
-                      Icon(
-                        Icons.description,
-                        color: theme.primaryColor,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Збирен извештај',
-                        style: theme.textTheme.bodyLarge,
-                      ),
+                      Icon(Icons.description, color: theme.primaryColor),
+                      const SizedBox(width: 10),
+                      Text('Збирен извештај', style: theme.textTheme.bodyLarge),
                     ],
                   ),
                 ),
               ),
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             Container(
               margin: defaultInsets,
               child: RichText(
@@ -262,8 +234,9 @@ class DrugDetailsScreen extends StatelessWidget {
                     ),
                     TextSpan(
                       text: 'lekovi.zdravstvo.gov.mk',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => launchUrl(drug.url!),
+                      recognizer:
+                          TapGestureRecognizer()
+                            ..onTap = () => launchUrl(drug.url!),
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.primaryColor,
                       ),
@@ -276,9 +249,7 @@ class DrugDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 100,
-            ),
+            const SizedBox(height: 100),
           ],
         ),
       ),

@@ -15,14 +15,12 @@ class FavoritesScreen extends StatelessWidget {
               size: 40,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Text(
               'Во изработка',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
             ),
           ],
         ),

@@ -22,19 +22,13 @@ class PharmacySuggestionList extends StatelessWidget {
                 child: ListTile(
                   key: Key(pharmacy.id),
                   leading: const Icon(Icons.search),
-                  title: Text(
-                    pharmacy.name ?? '',
-                  ),
-                  subtitle: Text(
-                    pharmacy.municipality ?? '',
-                  ),
+                  title: Text(pharmacy.name ?? ''),
+                  subtitle: Text(pharmacy.municipality ?? ''),
                 ),
               ),
             )
             .toList(),
-        Container(
-          height: 300,
-        ),
+        Container(height: 300),
       ],
     );
   }

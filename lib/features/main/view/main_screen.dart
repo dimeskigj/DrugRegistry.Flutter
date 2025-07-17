@@ -33,9 +33,10 @@ class MainScreenState extends State<MainScreen> {
         elevation: 10,
         shadowColor: Theme.of(context).shadowColor,
         selectedIndex: currentPageIndex,
-        onDestinationSelected: (value) => setState(() {
-          currentPageIndex = value;
-        }),
+        onDestinationSelected:
+            (value) => setState(() {
+              currentPageIndex = value;
+            }),
         destinations: const [
           NavigationDestination(
             selectedIcon: Icon(Icons.medication_rounded),
@@ -63,11 +64,12 @@ class MainScreenState extends State<MainScreen> {
               break;
           }
         },
-        child: const [
-          DrugSearchScreen(),
-          PharmacySearchScreen(),
-          InformationScreen(),
-        ][currentPageIndex],
+        child:
+            const [
+              DrugSearchScreen(),
+              PharmacySearchScreen(),
+              InformationScreen(),
+            ][currentPageIndex],
       ),
     );
   }
@@ -79,91 +81,92 @@ class MainScreenState extends State<MainScreen> {
       isDismissible: false,
       enableDrag: false,
       context: context,
-      builder: (context) => Container(
-        height: 500,
-        margin: const EdgeInsets.symmetric(
-          horizontal: 25,
-          vertical: 35,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Добредојде на Регистар на Лекови!',
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headlineSmall,
+      builder:
+          (context) => Container(
+            height: 500,
+            margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 35),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Добредојде на Регистар на Лекови!',
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.headlineSmall,
+                        ),
+                        const SizedBox(height: 20),
+                        RichText(
+                          textAlign: TextAlign.justify,
+                          text: TextSpan(
+                            style: theme.textTheme.bodyMedium,
+                            children: [
+                              const TextSpan(text: 'Ова е '),
+                              TextSpan(
+                                text: 'неофицијална ',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const TextSpan(
+                                text:
+                                    'мобилна апликација за македонскиот регистар на лекови. ',
+                              ),
+                              const TextSpan(
+                                text:
+                                    'Оваа апликација не е поврзана со ниту една државна институција и е направена од независно лице. Информациите за лекови и аптеки се влечат од ',
+                              ),
+                              TextSpan(
+                                text: Constants.lekoviUrl,
+                                recognizer:
+                                    TapGestureRecognizer()
+                                      ..onTap =
+                                          () => launchUrlString(
+                                            Constants.lekoviUrl,
+                                          ),
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: theme.primaryColor,
+                                ),
+                              ),
+                              const TextSpan(
+                                text:
+                                    '. Во секое време можеш да прочиташ информации за оваа апликација во табот за информации.',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                    RichText(
-                      textAlign: TextAlign.justify,
-                      text: TextSpan(
-                        style: theme.textTheme.bodyMedium,
-                        children: [
-                          const TextSpan(text: 'Ова е '),
-                          TextSpan(
-                            text: 'неофицијална ',
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const TextSpan(
-                            text:
-                                'мобилна апликација за македонскиот регистар на лекови. ',
-                          ),
-                          const TextSpan(
-                            text:
-                                'Оваа апликација не е поврзана со ниту една државна институција и е направена од независно лице. Информациите за лекови и аптеки се влечат од ',
-                          ),
-                          TextSpan(
-                            text: Constants.lekoviUrl,
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => launchUrlString(
-                                    Constants.lekoviUrl,
-                                  ),
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.primaryColor,
-                            ),
-                          ),
-                          const TextSpan(
-                            text:
-                                '. Во секое време можеш да прочиташ информации за оваа апликација во табот за информации.',
-                          ),
-                        ],
-                      ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton.icon(
+                      onPressed:
+                          () => launchUrlString(Constants.privacyPolicyUrl),
+                      label: const Text('Политика за Приватност'),
+                      icon: const Icon(Icons.launch),
+                    ),
+                    FilledButton.tonal(
+                      onPressed: () {
+                        context
+                            .read<MainScreenCubit>()
+                            .confirmFirstTimeDialog();
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Разбирам'),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton.icon(
-                  onPressed: () => launchUrlString(
-                    Constants.privacyPolicyUrl,
-                  ),
-                  label: const Text('Политика за Приватност'),
-                  icon: const Icon(Icons.launch),
-                ),
-                FilledButton.tonal(
-                  onPressed: () {
-                    context.read<MainScreenCubit>().confirmFirstTimeDialog();
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Разбирам'),
-                ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }

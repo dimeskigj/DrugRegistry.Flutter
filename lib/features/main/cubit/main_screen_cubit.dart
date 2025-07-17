@@ -5,11 +5,8 @@ import 'package:flutter_drug_registry/core/services/shared_preferences_service.d
 part 'main_screen_state.dart';
 
 class MainScreenCubit extends Cubit<MainScreenCubitState> {
-  MainScreenCubit(
-    SharedPreferencesService? sharedPreferencesService,
-  ) : super(
-          MainScreenInitial(),
-        ) {
+  MainScreenCubit(SharedPreferencesService? sharedPreferencesService)
+    : super(MainScreenInitial()) {
     _sharedPreferencesService =
         sharedPreferencesService ?? SharedPreferencesService();
   }

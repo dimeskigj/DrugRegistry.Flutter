@@ -36,8 +36,9 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
           children: [
             SearchAnchor(
               searchController: _searchController,
-              viewOnChanged: (value) =>
-                  pharmacySearchBloc.add(PharmacySearchQueryChanged(value)),
+              viewOnChanged:
+                  (value) =>
+                      pharmacySearchBloc.add(PharmacySearchQueryChanged(value)),
               viewOnSubmitted: (value) {
                 pharmacySearchBloc.add(PharmacySearchQuerySubmitted(value));
                 _searchController.closeView(null);
@@ -48,12 +49,11 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                   _searchController.closeView(null);
                   _focusNode.unfocus();
                 },
-                icon: const Icon(
-                  Icons.arrow_back,
-                ),
+                icon: const Icon(Icons.arrow_back),
               ),
-              dividerColor:
-                  Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              dividerColor: Theme.of(
+                context,
+              ).colorScheme.onSurface.withOpacity(0.5),
               builder: (_, __) {
                 return Container(
                   color: Theme.of(context).scaffoldBackgroundColor,
@@ -68,7 +68,9 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                         _searchController.openView();
                       },
                       onChanged: (query) {
-                        pharmacySearchBloc.add(PharmacySearchQueryChanged(query));
+                        pharmacySearchBloc.add(
+                          PharmacySearchQueryChanged(query),
+                        );
                         _searchController.openView();
                       },
                       leading: const Padding(
@@ -81,86 +83,91 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
               },
               viewBuilder: (_) {
                 return BlocBuilder<PharmacySearchBloc, PharmacySearchState>(
-                  builder: (context, state) => switch (state) {
-                    PharmacySearchLoadInProgress() => const Align(
-                        alignment: Alignment.topCenter,
-                        child: LinearProgressIndicator(
-                          backgroundColor: Colors.transparent,
+                  builder:
+                      (context, state) => switch (state) {
+                        PharmacySearchLoadInProgress() => const Align(
+                          alignment: Alignment.topCenter,
+                          child: LinearProgressIndicator(
+                            backgroundColor: Colors.transparent,
+                          ),
                         ),
-                      ),
-                    PharmacySearchLoadSuccess() => PharmacySuggestionList(
-                        pharmacies: state.pharmacies,
-                        onTileTap: (pharmacy) {
-                          pharmacySearchBloc.add(
-                            PharmacySearchSuggestionTapped(pharmacy),
-                          );
-                          _searchController.closeView(null);
-                          _searchController.text = pharmacy.name ?? '';
-                          _focusNode.unfocus();
+                        PharmacySearchLoadSuccess() => PharmacySuggestionList(
+                          pharmacies: state.pharmacies,
+                          onTileTap: (pharmacy) {
+                            pharmacySearchBloc.add(
+                              PharmacySearchSuggestionTapped(pharmacy),
+                            );
+                            _searchController.closeView(null);
+                            _searchController.text = pharmacy.name ?? '';
+                            _focusNode.unfocus();
 
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => PharmacyDetailsScreen(
-                                pharmacy: pharmacy,
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder:
+                                    (_) => PharmacyDetailsScreen(
+                                      pharmacy: pharmacy,
+                                    ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    _ => Container(),
-                  },
+                            );
+                          },
+                        ),
+                        _ => Container(),
+                      },
                 );
               },
               suggestionsBuilder: (_, __) => [],
             ),
             BlocBuilder<PharmacySearchBloc, PharmacySearchState>(
-              builder: (_, state) => switch (state) {
-                PharmacySearchLoadFail() => const Align(
-                    alignment: Alignment.topCenter,
-                    child: Text('Нешто тргна наопаку, пробај пак...'),
-                  ),
-                PharmacySearchLoadInProgress() => const Align(
-                    alignment: Alignment.topCenter,
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.transparent,
+              builder:
+                  (_, state) => switch (state) {
+                    PharmacySearchLoadFail() => const Align(
+                      alignment: Alignment.topCenter,
+                      child: Text('Нешто тргна наопаку, пробај пак...'),
                     ),
-                  ),
-                PharmacySearchLoadSuccess() => state.pharmacies.isEmpty
-                    ? const Align(
-                        alignment: Alignment.topCenter,
-                        child: Text('Нема резултат од пребарувањето.'),
-                      )
-                    : Expanded(
-                        child: ListView(
-                          children: [
-                            ...state.pharmacies
-                                .map(
-                                  (pharmacy) => Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      vertical: 4,
-                                      horizontal: 16,
-                                    ),
-                                    child: PharmacyCard(
-                                      onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => PharmacyDetailsScreen(
-                                            pharmacy: pharmacy,
-                                          ),
+                    PharmacySearchLoadInProgress() => const Align(
+                      alignment: Alignment.topCenter,
+                      child: LinearProgressIndicator(
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
+                    PharmacySearchLoadSuccess() =>
+                      state.pharmacies.isEmpty
+                          ? const Align(
+                            alignment: Alignment.topCenter,
+                            child: Text('Нема резултат од пребарувањето.'),
+                          )
+                          : Expanded(
+                            child: ListView(
+                              children: [
+                                ...state.pharmacies
+                                    .map(
+                                      (pharmacy) => Container(
+                                        margin: const EdgeInsets.symmetric(
+                                          vertical: 4,
+                                          horizontal: 16,
+                                        ),
+                                        child: PharmacyCard(
+                                          onTap:
+                                              () => Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (_) =>
+                                                          PharmacyDetailsScreen(
+                                                            pharmacy: pharmacy,
+                                                          ),
+                                                ),
+                                              ),
+                                          pharmacy: pharmacy,
                                         ),
                                       ),
-                                      pharmacy: pharmacy,
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            Container(
-                              height: 100,
+                                    )
+                                    .toList(),
+                                Container(height: 100),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                _ => Container(),
-              },
+                          ),
+                    _ => Container(),
+                  },
             ),
           ],
         ),

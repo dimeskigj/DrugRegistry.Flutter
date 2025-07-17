@@ -14,19 +14,14 @@ class PharmacySearchBloc
   late final PharmacyService _pharmacyService;
   String _lastQuery = '';
 
-  PharmacySearchBloc(
-    PharmacyService? pharmacyService,
-  ) : super(PharmacySearchInitial()) {
+  PharmacySearchBloc(PharmacyService? pharmacyService)
+    : super(PharmacySearchInitial()) {
     _pharmacyService = pharmacyService ?? PharmacyService();
 
     on<PharmacySearchQuerySubmitted>(_onQuerySubmitted);
     on<PharmacySearchQueryChanged>(
       _onQueryChanged,
-      transformer: debounce(
-        const Duration(
-          milliseconds: 300,
-        ),
-      ),
+      transformer: debounce(const Duration(milliseconds: 300)),
     );
     on<PharmacySearchSuggestionTapped>(_onSuggestionTapped);
   }
@@ -53,7 +48,10 @@ class PharmacySearchBloc
   }
 
   Future<void> _queryPharmacies(
-      String query, Emitter<PharmacySearchState> emit, {bool shouldReQuery = false,}) async {
+    String query,
+    Emitter<PharmacySearchState> emit, {
+    bool shouldReQuery = false,
+  }) async {
     try {
       if (_lastQuery == query && !shouldReQuery) return;
       _lastQuery = query;

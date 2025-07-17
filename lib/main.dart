@@ -12,15 +12,9 @@ import 'package:flutter_drug_registry/features/pharmacy_search/bloc/pharmacy_sea
 import 'package:get_it/get_it.dart';
 
 void main() async {
-  GetIt.I.registerLazySingleton<DrugService>(
-    () => DrugService(),
-  );
-  GetIt.I.registerLazySingleton<PharmacyService>(
-    () => PharmacyService(),
-  );
-  GetIt.I.registerLazySingleton<LocationService>(
-    () => LocationService(),
-  );
+  GetIt.I.registerLazySingleton<DrugService>(() => DrugService());
+  GetIt.I.registerLazySingleton<PharmacyService>(() => PharmacyService());
+  GetIt.I.registerLazySingleton<LocationService>(() => LocationService());
   GetIt.I.registerLazySingleton<SharedPreferencesService>(
     () => SharedPreferencesService(),
   );
@@ -37,16 +31,13 @@ void main() async {
         BlocProvider<DrugSearchBloc>(
           create: (_) => DrugSearchBloc(GetIt.I.get<DrugService>()),
         ),
-        BlocProvider<DrugDetailsCubit>(
-          create: (_) => DrugDetailsCubit(),
-        ),
+        BlocProvider<DrugDetailsCubit>(create: (_) => DrugDetailsCubit()),
         BlocProvider<PharmacySearchBloc>(
           create: (_) => PharmacySearchBloc(GetIt.I.get<PharmacyService>()),
         ),
         BlocProvider<MainScreenCubit>(
-          create: (_) => MainScreenCubit(
-            GetIt.I.get<SharedPreferencesService>(),
-          ),
+          create:
+              (_) => MainScreenCubit(GetIt.I.get<SharedPreferencesService>()),
         ),
       ],
       child: const MyApp(),
@@ -62,17 +53,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(
-      builder: (context) => MaterialApp(
-        home: const MainScreen(),
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.blue,
-            brightness: Brightness.light,
+      builder:
+          (context) => MaterialApp(
+            home: const MainScreen(),
+            theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: Colors.blue,
+                brightness: Brightness.light,
+              ),
+            ),
+            navigatorKey: navigatorKey,
           ),
-        ),
-        navigatorKey: navigatorKey,
-      ),
     );
   }
 }

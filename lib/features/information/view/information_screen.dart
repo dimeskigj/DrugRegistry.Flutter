@@ -31,9 +31,10 @@ class InformationScreen extends StatelessWidget {
                   ),
                   FutureBuilder(
                     future: PackageInfo.fromPlatform(),
-                    builder: (context, snapshot) => Text(
-                      'Верзија ${snapshot.data?.version}+${snapshot.data?.buildNumber}',
-                    ),
+                    builder:
+                        (context, snapshot) => Text(
+                          'Верзија ${snapshot.data?.version}+${snapshot.data?.buildNumber}',
+                        ),
                   ),
                   const SizedBox(height: 30),
                   RichText(
@@ -58,17 +59,15 @@ class InformationScreen extends StatelessWidget {
                         ),
                         TextSpan(
                           text: Constants.lekoviUrl,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => launchUrlString(
-                                  Constants.lekoviUrl,
-                                ),
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap =
+                                    () => launchUrlString(Constants.lekoviUrl),
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.primaryColor,
                           ),
                         ),
-                        const TextSpan(
-                          text: '.',
-                        ),
+                        const TextSpan(text: '.'),
                       ],
                     ),
                   ),
@@ -83,13 +82,9 @@ class InformationScreen extends StatelessWidget {
               onPressed: () => launchUrlString('mailto:dimeskigj@gmail.com'),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'Контакт',
-                ),
+                child: Text('Контакт'),
               ),
-              icon: const Icon(
-                Icons.mail,
-              ),
+              icon: const Icon(Icons.mail),
               style: FilledButton.styleFrom(
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
@@ -104,13 +99,9 @@ class InformationScreen extends StatelessWidget {
               onPressed: () => launchUrlString(Constants.privacyPolicyUrl),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'Политика за приватност',
-                ),
+                child: Text('Политика за приватност'),
               ),
-              icon: const Icon(
-                Icons.launch,
-              ),
+              icon: const Icon(Icons.launch),
               style: FilledButton.styleFrom(
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,

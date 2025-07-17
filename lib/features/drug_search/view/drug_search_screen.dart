@@ -36,8 +36,9 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
           children: [
             SearchAnchor(
               searchController: _searchController,
-              viewOnChanged: (value) =>
-                  drugSearchBloc.add(DrugSearchQueryChanged(query: value)),
+              viewOnChanged:
+                  (value) =>
+                      drugSearchBloc.add(DrugSearchQueryChanged(query: value)),
               viewOnSubmitted: (value) {
                 drugSearchBloc.add(DrugSearchQuerySubmitted(query: value));
                 _searchController.closeView(null);
@@ -48,12 +49,11 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                   _searchController.closeView(null);
                   _focusNode.unfocus();
                 },
-                icon: const Icon(
-                  Icons.arrow_back,
-                ),
+                icon: const Icon(Icons.arrow_back),
               ),
-              dividerColor:
-                  Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              dividerColor: Theme.of(
+                context,
+              ).colorScheme.onSurface.withOpacity(0.5),
               builder: (_, __) {
                 return Container(
                   color: Theme.of(context).scaffoldBackgroundColor,
@@ -68,7 +68,9 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                         _searchController.openView();
                       },
                       onChanged: (value) {
-                        drugSearchBloc.add(DrugSearchQueryChanged(query: value));
+                        drugSearchBloc.add(
+                          DrugSearchQueryChanged(query: value),
+                        );
                         _searchController.openView();
                       },
                       leading: const Padding(
@@ -81,88 +83,92 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
               },
               viewBuilder: (_) {
                 return BlocBuilder<DrugSearchBloc, DrugSearchState>(
-                  builder: (context, state) => switch (state) {
-                    DrugSearchLoadInProgress() => const Align(
-                        alignment: Alignment.topCenter,
-                        child: LinearProgressIndicator(
-                          backgroundColor: Colors.transparent,
+                  builder:
+                      (context, state) => switch (state) {
+                        DrugSearchLoadInProgress() => const Align(
+                          alignment: Alignment.topCenter,
+                          child: LinearProgressIndicator(
+                            backgroundColor: Colors.transparent,
+                          ),
                         ),
-                      ),
-                    DrugSearchLoadSuccess() => DrugSuggestionList(
-                        drugs: state.drugs,
-                        onTileTap: (d) {
-                          drugSearchBloc.add(
-                            DrugSearchSuggestionTapped(drugGroup: d),
-                          );
-                          _searchController.closeView(null);
-                          _searchController.text = d.latinName;
-                          _focusNode.unfocus();
-
-                          if (d.drugs.length == 1) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => DrugDetailsScreen(
-                                  drug: d.drugs.first,
-                                ),
-                              ),
+                        DrugSearchLoadSuccess() => DrugSuggestionList(
+                          drugs: state.drugs,
+                          onTileTap: (d) {
+                            drugSearchBloc.add(
+                              DrugSearchSuggestionTapped(drugGroup: d),
                             );
-                          }
-                        },
-                      ),
-                    _ => Container(),
-                  },
+                            _searchController.closeView(null);
+                            _searchController.text = d.latinName;
+                            _focusNode.unfocus();
+
+                            if (d.drugs.length == 1) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder:
+                                      (_) => DrugDetailsScreen(
+                                        drug: d.drugs.first,
+                                      ),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        _ => Container(),
+                      },
                 );
               },
               suggestionsBuilder: (_, __) => [],
             ),
             BlocBuilder<DrugSearchBloc, DrugSearchState>(
-              builder: (_, state) => switch (state) {
-                DrugSearchLoadInProgress() => const Align(
-                    alignment: Alignment.topCenter,
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.transparent,
+              builder:
+                  (_, state) => switch (state) {
+                    DrugSearchLoadInProgress() => const Align(
+                      alignment: Alignment.topCenter,
+                      child: LinearProgressIndicator(
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
-                  ),
-                DrugSearchLoadFail() => const Align(
-                    alignment: Alignment.topCenter,
-                    child: Text('Нешто тргна наопаку, пробај пак...'),
-                  ),
-                DrugSearchLoadSuccess() => state.drugs.isEmpty
-                    ? const Align(
-                        alignment: Alignment.topCenter,
-                        child: Text('Нема резултат од пребарувањето.'),
-                      )
-                    : Expanded(
-                        child: ListView(
-                          children: [
-                            ...state.drugs
-                                .map(
-                                  (drug) => Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      vertical: 4,
-                                      horizontal: 16,
-                                    ),
-                                    child: DrugCard(
-                                      onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) => DrugDetailsScreen(
-                                            drug: drug,
-                                          ),
+                    DrugSearchLoadFail() => const Align(
+                      alignment: Alignment.topCenter,
+                      child: Text('Нешто тргна наопаку, пробај пак...'),
+                    ),
+                    DrugSearchLoadSuccess() =>
+                      state.drugs.isEmpty
+                          ? const Align(
+                            alignment: Alignment.topCenter,
+                            child: Text('Нема резултат од пребарувањето.'),
+                          )
+                          : Expanded(
+                            child: ListView(
+                              children: [
+                                ...state.drugs
+                                    .map(
+                                      (drug) => Container(
+                                        margin: const EdgeInsets.symmetric(
+                                          vertical: 4,
+                                          horizontal: 16,
+                                        ),
+                                        child: DrugCard(
+                                          onTap:
+                                              () => Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (_) => DrugDetailsScreen(
+                                                        drug: drug,
+                                                      ),
+                                                ),
+                                              ),
+                                          drug: drug,
                                         ),
                                       ),
-                                      drug: drug,
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            Container(
-                              height: 100,
+                                    )
+                                    .toList(),
+                                Container(height: 100),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                _ => Container(),
-              },
+                          ),
+                    _ => Container(),
+                  },
             ),
           ],
         ),

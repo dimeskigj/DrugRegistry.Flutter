@@ -8,4 +8,5 @@ extension ResponseExtensions on Response {
     );
   }
 }
-        // User denied location permissions.
+
+// User denied location permissions.

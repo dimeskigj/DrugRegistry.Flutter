@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/core/models/drug.dart';
 
 class DrugCard extends StatelessWidget {
-  const DrugCard({
-    super.key,
-    required this.drug,
-    required this.onTap,
-  });
+  const DrugCard({super.key, required this.drug, required this.onTap});
 
   final Drug drug;
   final void Function() onTap;
@@ -47,20 +43,13 @@ class DrugCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(
-                color: theme.colorScheme.onSurface.withOpacity(0.5),
-              ),
+              Divider(color: theme.colorScheme.onSurface.withOpacity(0.5)),
               Text(
                 "${drug.packaging!} ${drug.pharmaceuticalForm!}",
                 style: theme.textTheme.labelMedium,
               ),
-              Container(
-                height: 10,
-              ),
-              Text(
-                drug.manufacturer!,
-                style: theme.textTheme.labelLarge,
-              ),
+              Container(height: 10),
+              Text(drug.manufacturer!, style: theme.textTheme.labelLarge),
             ],
           ),
         ),

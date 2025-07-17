@@ -5,7 +5,7 @@ import '../models/location.dart';
 class LocationService {
   Future<bool> _checkLocationServices() async {
     bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
-    
+
     if (!isLocationEnabled) {
       // Location services are disabled on the device.
       return false;
