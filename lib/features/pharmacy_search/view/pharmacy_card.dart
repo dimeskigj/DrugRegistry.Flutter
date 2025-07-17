@@ -49,7 +49,12 @@ class PharmacyCard extends StatelessWidget {
                 ],
               ),
               if (pharmacy.address != null)
-                Divider(color: theme.colorScheme.onSurface.withOpacity(0.5)),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 6),
+                  child: Divider(
+                    color: theme.colorScheme.onSurface.withValues(alpha: .2),
+                  ),
+                ),
               if (pharmacy.address != null) Text(pharmacy.address ?? ''),
             ],
           ),

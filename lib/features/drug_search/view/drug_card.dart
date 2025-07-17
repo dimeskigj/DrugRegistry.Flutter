@@ -43,7 +43,9 @@ class DrugCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(color: theme.colorScheme.onSurface.withOpacity(0.5)),
+              const SizedBox(height: 6),
+              Divider(color: theme.colorScheme.onSurface.withValues(alpha: .2)),
+              const SizedBox(height: 6),
               Text(
                 "${drug.packaging!} ${drug.pharmaceuticalForm!}",
                 style: theme.textTheme.labelMedium,
