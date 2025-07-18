@@ -16,6 +16,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State<MainScreen> {
+  final PageStorageBucket bucket = PageStorageBucket();
   int currentPageIndex = 0;
 
   @override
@@ -55,21 +56,24 @@ class MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: BlocListener<MainScreenCubit, MainScreenCubitState>(
-        listener: (BuildContext context, MainScreenCubitState state) {
-          switch (state) {
-            case MainScreenFirstTime():
-              showFirstTimeBottomSheet(context);
-            case _:
-              break;
-          }
-        },
-        child:
-            const [
-              DrugSearchScreen(),
-              PharmacySearchScreen(),
-              InformationScreen(),
-            ][currentPageIndex],
+      body: PageStorage(
+        bucket: bucket,
+        child: BlocListener<MainScreenCubit, MainScreenCubitState>(
+          listener: (BuildContext context, MainScreenCubitState state) {
+            switch (state) {
+              case MainScreenFirstTime():
+                showFirstTimeBottomSheet(context);
+              case _:
+                break;
+            }
+          },
+          child:
+              const [
+                DrugSearchScreen(),
+                PharmacySearchScreen(),
+                InformationScreen(),
+              ][currentPageIndex],
+        ),
       ),
     );
   }

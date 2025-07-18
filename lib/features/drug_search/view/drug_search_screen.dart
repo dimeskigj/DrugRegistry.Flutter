@@ -17,6 +17,8 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
   final _searchController = SearchController();
   final _focusNode = FocusNode();
 
+  static const pageStorageKey = 'drug_search_screen';
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -51,19 +53,30 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                 },
                 icon: const Icon(Icons.arrow_back),
               ),
-              dividerColor: Theme.of(
-                context,
-              ).colorScheme.onSurface.withOpacity(0.5),
+              dividerColor: Colors.transparent,
               builder: (_, __) {
                 return Container(
+                  margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
                   color: Theme.of(context).scaffoldBackgroundColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.2),
+                          width: 1,
+                        ),
+                      ),
+                    ),
                     child: SearchBar(
                       hintText: "Пребарувај лекови",
-                      elevation: WidgetStateProperty.all(1),
+                      elevation: WidgetStateProperty.all(0),
                       focusNode: _focusNode,
                       controller: _searchController,
+                      shape: const WidgetStatePropertyAll(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                      ),
                       onTap: () {
                         _searchController.openView();
                       },
@@ -73,9 +86,12 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                         );
                         _searchController.openView();
                       },
-                      leading: const Padding(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Icon(Icons.search),
+                      leading: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Icon(
+                          Icons.search,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ),
                   ),
@@ -122,48 +138,89 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
             BlocBuilder<DrugSearchBloc, DrugSearchState>(
               builder:
                   (_, state) => switch (state) {
-                    DrugSearchLoadInProgress() => const Align(
-                      alignment: Alignment.topCenter,
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.transparent,
+                    DrugSearchLoadInProgress() => Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      child: const Align(
+                        alignment: Alignment.topCenter,
+                        child: LinearProgressIndicator(
+                          backgroundColor: Colors.transparent,
+                        ),
                       ),
                     ),
-                    DrugSearchLoadFail() => const Align(
-                      alignment: Alignment.topCenter,
-                      child: Text('Нешто тргна наопаку, пробај пак...'),
+                    DrugSearchLoadFail() => Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      child: const Align(
+                        alignment: Alignment.topCenter,
+                        child: Text('Нешто тргна наопаку, пробај пак...'),
+                      ),
                     ),
                     DrugSearchLoadSuccess() =>
                       state.drugs.isEmpty
-                          ? const Align(
-                            alignment: Alignment.topCenter,
-                            child: Text('Нема резултат од пребарувањето.'),
+                          ? Container(
+                            margin: const EdgeInsets.only(top: 16),
+                            child: const Align(
+                              alignment: Alignment.topCenter,
+                              child: Text('Нема резултат од пребарувањето.'),
+                            ),
                           )
                           : Expanded(
-                            child: ListView(
+                            child: Stack(
                               children: [
-                                ...state.drugs
-                                    .map(
-                                      (drug) => Container(
-                                        margin: const EdgeInsets.symmetric(
-                                          vertical: 4,
-                                          horizontal: 16,
-                                        ),
-                                        child: DrugCard(
-                                          onTap:
-                                              () => Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder:
-                                                      (_) => DrugDetailsScreen(
-                                                        drug: drug,
+                                Positioned.fill(
+                                  child: ListView(
+                                    key: PageStorageKey(
+                                      '$pageStorageKey${state.hashCode}',
+                                    ),
+                                    children: [
+                                      const SizedBox(height: 24),
+                                      ...state.drugs
+                                          .map(
+                                            (drug) => Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                    vertical: 4,
+                                                    horizontal: 16,
+                                                  ),
+                                              child: DrugCard(
+                                                onTap:
+                                                    () => Navigator.of(
+                                                      context,
+                                                    ).push(
+                                                      MaterialPageRoute(
+                                                        builder:
+                                                            (_) =>
+                                                                DrugDetailsScreen(
+                                                                  drug: drug,
+                                                                ),
                                                       ),
-                                                ),
+                                                    ),
+                                                drug: drug,
                                               ),
-                                          drug: drug,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                                Container(height: 100),
+                                            ),
+                                          )
+                                          .toList(),
+                                      const SizedBox(height: 100),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      stops: const [0.5, 1],
+                                      colors: [
+                                        Theme.of(
+                                          context,
+                                        ).scaffoldBackgroundColor,
+                                        Theme.of(context)
+                                            .scaffoldBackgroundColor
+                                            .withValues(alpha: 0),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

@@ -13,11 +13,19 @@ class PharmacyCard extends StatelessWidget {
 
     return Card(
       key: Key(pharmacy.id),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: theme.colorScheme.onSurface.withValues(alpha: .1),
+          width: 1.5,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+          margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

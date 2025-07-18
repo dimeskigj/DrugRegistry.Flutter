@@ -12,6 +12,14 @@ class DrugCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       key: Key(drug.id),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: theme.colorScheme.onSurface.withValues(alpha: .1),
+          width: 1.5,
+        ),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(10),
