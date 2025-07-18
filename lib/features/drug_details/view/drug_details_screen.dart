@@ -86,7 +86,6 @@ class DrugDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            // const CurvedDivider(),
             const SizedBox(height: 30),
             if (drug.pharmaceuticalForm != null)
               Container(
