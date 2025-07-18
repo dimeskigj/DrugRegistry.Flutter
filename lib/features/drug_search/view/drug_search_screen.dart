@@ -179,7 +179,7 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                                               margin:
                                                   const EdgeInsets.symmetric(
                                                     vertical: 4,
-                                                    horizontal: 16,
+                                                    horizontal: 14,
                                                   ),
                                               child: DrugCard(
                                                 onTap:
