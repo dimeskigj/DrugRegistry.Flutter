@@ -24,7 +24,7 @@ class DrugCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+          margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
