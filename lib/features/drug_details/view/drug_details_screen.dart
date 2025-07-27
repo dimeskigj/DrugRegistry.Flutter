@@ -229,7 +229,7 @@ class DrugDetailsScreen extends StatelessWidget {
                   children: [
                     const TextSpan(
                       text:
-                          'Внимание! Секогаш потврдувај ги информациите на официјалната страна на регистарот на лекови ',
+                          'Секогаш потврдувај ги информациите на официјалната страна на регистарот на лекови ',
                     ),
                     TextSpan(
                       text: 'lekovi.zdravstvo.gov.mk',
