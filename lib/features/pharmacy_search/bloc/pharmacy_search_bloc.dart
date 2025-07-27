@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_drug_registry/core/models/pharmacy.dart';
 import 'package:flutter_drug_registry/core/services/pharmacy_service.dart';
@@ -38,8 +39,12 @@ class PharmacySearchBloc
     PharmacySearchInitialized event,
     Emitter<PharmacySearchState> emit,
   ) async {
-    _recentSearches =
+    var sharedPreferencesRecentSearches =
         _sharedPreferencesService.getRecentPharmacySearches() ?? [];
+
+    if (sharedPreferencesRecentSearches.equals(_recentSearches)) return;
+
+    _recentSearches = sharedPreferencesRecentSearches;
     emit(PharmacySearchInitial(recentSearches: _recentSearches));
   }
 

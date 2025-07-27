@@ -235,7 +235,7 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                         recentSearches: state.recentSearches,
                         onSuggestionSelected: (suggestion) {
                           pharmacySearchBloc.add(
-                            PharmacySearchQueryChanged(suggestion),
+                            PharmacySearchQuerySubmitted(suggestion),
                           );
                           _searchController.text = suggestion;
                         },

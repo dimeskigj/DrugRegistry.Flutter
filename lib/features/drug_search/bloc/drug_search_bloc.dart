@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_drug_registry/core/models/drug.dart';
 import 'package:flutter_drug_registry/core/models/drug_group.dart';
@@ -38,7 +39,12 @@ class DrugSearchBloc extends Bloc<DrugSearchEvent, DrugSearchState> {
     DrugSearchInitialized event,
     Emitter<DrugSearchState> emit,
   ) async {
-    _recentSearches = _sharedPreferencesService.getRecentDrugSearches() ?? [];
+    var sharedPreferencesRecentSearches =
+        _sharedPreferencesService.getRecentDrugSearches() ?? [];
+
+    if (sharedPreferencesRecentSearches.equals(_recentSearches)) return;
+
+    _recentSearches = sharedPreferencesRecentSearches;
     emit(DrugSearchInitial(recentSearches: _recentSearches));
   }
 
