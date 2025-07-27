@@ -29,6 +29,12 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<PharmacySearchBloc>().add(PharmacySearchInitialized());
+  }
+
+  @override
   Widget build(BuildContext context) {
     final pharmacySearchBloc = context.read<PharmacySearchBloc>();
 
@@ -226,6 +232,7 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                       margin: const EdgeInsets.fromLTRB(16, 20, 16, 0),
                       child: SuggestionChips(
                         suggestions: suggestions,
+                        recentSearches: state.recentSearches,
                         onSuggestionSelected: (suggestion) {
                           pharmacySearchBloc.add(
                             PharmacySearchQueryChanged(suggestion),

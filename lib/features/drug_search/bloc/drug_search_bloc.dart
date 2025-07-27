@@ -91,14 +91,15 @@ class DrugSearchBloc extends Bloc<DrugSearchEvent, DrugSearchState> {
   }
 
   Future<void> updateRecentSearches({String query = ''}) async {
-    if (!_recentSearches.contains(query)) {
-      _recentSearches.insert(0, query);
+    if (query.isEmpty) return;
 
-      if (_recentSearches.length > 5) {
-        _recentSearches = _recentSearches.take(5).toList();
-      }
+    _recentSearches.remove(query);
+    _recentSearches.insert(0, query);
 
-      await _sharedPreferencesService.setRecentDrugSearches(_recentSearches);
+    if (_recentSearches.length > 5) {
+      _recentSearches = _recentSearches.take(5).toList();
     }
+
+    await _sharedPreferencesService.setRecentDrugSearches(_recentSearches);
   }
 }

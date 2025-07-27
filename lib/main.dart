@@ -37,7 +37,11 @@ void main() async {
         ),
         BlocProvider<DrugDetailsCubit>(create: (_) => DrugDetailsCubit()),
         BlocProvider<PharmacySearchBloc>(
-          create: (_) => PharmacySearchBloc(GetIt.I.get<PharmacyService>()),
+          create:
+              (_) => PharmacySearchBloc(
+                GetIt.I.get<PharmacyService>(),
+                GetIt.I.get<SharedPreferencesService>(),
+              ),
         ),
         BlocProvider<MainScreenCubit>(
           create:
