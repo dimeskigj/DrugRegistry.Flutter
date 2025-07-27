@@ -5,6 +5,7 @@ import 'package:flutter_drug_registry/features/drug_search/bloc/drug_search_bloc
 import 'package:flutter_drug_registry/features/drug_search/drug_search.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/drug_card.dart';
 import 'package:flutter_drug_registry/features/drug_search/view/suggestion_list.dart';
+import 'package:flutter_drug_registry/widgets/suggestion_chips.dart';
 
 class DrugSearchScreen extends StatefulWidget {
   const DrugSearchScreen({Key? key}) : super(key: key);
@@ -18,6 +19,13 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
   final _focusNode = FocusNode();
 
   static const pageStorageKey = 'drug_search_screen';
+  static const suggestions = [
+    "paracetamol",
+    "ibuprofen",
+    "loratadine",
+    "analgin",
+    "amoxicillin",
+  ];
 
   @override
   void dispose() {
@@ -136,96 +144,105 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
               suggestionsBuilder: (_, __) => [],
             ),
             BlocBuilder<DrugSearchBloc, DrugSearchState>(
-              builder:
-                  (_, state) => switch (state) {
-                    DrugSearchLoadInProgress() => Container(
-                      margin: const EdgeInsets.only(top: 16),
-                      child: const Align(
-                        alignment: Alignment.topCenter,
-                        child: LinearProgressIndicator(
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
+              builder: (_, state) {
+                return switch (state) {
+                  DrugSearchLoadInProgress() => const Align(
+                    alignment: Alignment.topCenter,
+                    child: LinearProgressIndicator(
+                      backgroundColor: Colors.transparent,
                     ),
-                    DrugSearchLoadFail() => Container(
-                      margin: const EdgeInsets.only(top: 16),
-                      child: const Align(
-                        alignment: Alignment.topCenter,
-                        child: Text('Нешто тргна наопаку, пробај пак...'),
-                      ),
+                  ),
+                  DrugSearchLoadFail() => Container(
+                    margin: const EdgeInsets.only(top: 16),
+                    child: const Align(
+                      alignment: Alignment.topCenter,
+                      child: Text('Нешто тргна наопаку, пробај пак...'),
                     ),
-                    DrugSearchLoadSuccess() =>
-                      state.drugs.isEmpty
-                          ? Container(
-                            margin: const EdgeInsets.only(top: 16),
-                            child: const Align(
-                              alignment: Alignment.topCenter,
-                              child: Text('Нема резултат од пребарувањето.'),
-                            ),
-                          )
-                          : Expanded(
-                            child: Stack(
+                  ),
+                  DrugSearchLoadSuccess() =>
+                    state.drugs.isEmpty
+                        ? Container(
+                          margin: const EdgeInsets.only(top: 16),
+                          child: const Align(
+                            alignment: Alignment.topCenter,
+                            child: Column(
                               children: [
-                                Positioned.fill(
-                                  child: ListView(
-                                    key: PageStorageKey(
-                                      '$pageStorageKey${state.hashCode}',
-                                    ),
-                                    children: [
-                                      const SizedBox(height: 24),
-                                      ...state.drugs
-                                          .map(
-                                            (drug) => Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                    vertical: 4,
-                                                    horizontal: 14,
-                                                  ),
-                                              child: DrugCard(
-                                                onTap:
-                                                    () => Navigator.of(
-                                                      context,
-                                                    ).push(
-                                                      MaterialPageRoute(
-                                                        builder:
-                                                            (_) =>
-                                                                DrugDetailsScreen(
-                                                                  drug: drug,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                drug: drug,
-                                              ),
-                                            ),
-                                          )
-                                          .toList(),
-                                      const SizedBox(height: 100),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      stops: const [0.5, 1],
-                                      colors: [
-                                        Theme.of(
-                                          context,
-                                        ).scaffoldBackgroundColor,
-                                        Theme.of(context)
-                                            .scaffoldBackgroundColor
-                                            .withValues(alpha: 0),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                Text('Нема резултат од пребарувањето.'),
                               ],
                             ),
                           ),
-                    _ => Container(),
-                  },
+                        )
+                        : Expanded(
+                          child: Stack(
+                            children: [
+                              Positioned.fill(
+                                child: ListView(
+                                  key: PageStorageKey(
+                                    '$pageStorageKey${state.hashCode}',
+                                  ),
+                                  children: [
+                                    const SizedBox(height: 24),
+                                    ...state.drugs
+                                        .map(
+                                          (drug) => Container(
+                                            margin: const EdgeInsets.symmetric(
+                                              vertical: 4,
+                                              horizontal: 14,
+                                            ),
+                                            child: DrugCard(
+                                              onTap:
+                                                  () => Navigator.of(
+                                                    context,
+                                                  ).push(
+                                                    MaterialPageRoute(
+                                                      builder:
+                                                          (_) =>
+                                                              DrugDetailsScreen(
+                                                                drug: drug,
+                                                              ),
+                                                    ),
+                                                  ),
+                                              drug: drug,
+                                            ),
+                                          ),
+                                        )
+                                        .toList(),
+                                    const SizedBox(height: 100),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    stops: const [0.5, 1],
+                                    colors: [
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                      Theme.of(context).scaffoldBackgroundColor
+                                          .withValues(alpha: 0),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                  DrugSearchInitial() => Container(
+                    margin: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                    child: SuggestionChips(
+                      suggestions: suggestions,
+                      onSuggestionSelected: (suggestion) {
+                        drugSearchBloc.add(
+                          DrugSearchQueryChanged(query: suggestion),
+                        );
+                        _searchController.text = suggestion;
+                      },
+                    ),
+                  ),
+                };
+              },
             ),
           ],
         ),

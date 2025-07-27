@@ -5,6 +5,7 @@ import 'package:flutter_drug_registry/features/pharmacy_search/bloc/pharmacy_sea
 import 'package:flutter_drug_registry/features/pharmacy_search/pharmacy_search.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/view/pharmacy_card.dart';
 import 'package:flutter_drug_registry/features/pharmacy_search/view/pharmacy_suggestion_list.dart';
+import 'package:flutter_drug_registry/widgets/suggestion_chips.dart';
 
 class PharmacySearchScreen extends StatefulWidget {
   const PharmacySearchScreen({super.key});
@@ -18,6 +19,7 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
   final _focusNode = FocusNode();
 
   static const pageStorageKey = 'pharmacy_search_screen';
+  static const suggestions = ['Зегин', 'Еурофарм', 'Виола'];
 
   @override
   void dispose() {
@@ -220,7 +222,18 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
                               ],
                             ),
                           ),
-                    _ => Container(),
+                    PharmacySearchInitial() => Container(
+                      margin: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                      child: SuggestionChips(
+                        suggestions: suggestions,
+                        onSuggestionSelected: (suggestion) {
+                          pharmacySearchBloc.add(
+                            PharmacySearchQueryChanged(suggestion),
+                          );
+                          _searchController.text = suggestion;
+                        },
+                      ),
+                    ),
                   },
             ),
           ],
