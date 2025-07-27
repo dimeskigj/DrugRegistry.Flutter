@@ -35,6 +35,12 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
   }
 
   @override
+  void initState() {
+    context.read<DrugSearchBloc>().add(DrugSearchInitialized());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final drugSearchBloc = context.read<DrugSearchBloc>();
 
@@ -233,9 +239,10 @@ class _DrugSearchScreenState extends State<DrugSearchScreen> {
                     margin: const EdgeInsets.fromLTRB(16, 20, 16, 0),
                     child: SuggestionChips(
                       suggestions: suggestions,
+                      recentSearches: state.recentSearches,
                       onSuggestionSelected: (suggestion) {
                         drugSearchBloc.add(
-                          DrugSearchQueryChanged(query: suggestion),
+                          DrugSearchQuerySubmitted(query: suggestion),
                         );
                         _searchController.text = suggestion;
                       },
