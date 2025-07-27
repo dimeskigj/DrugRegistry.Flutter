@@ -4,6 +4,8 @@ const _themeKey = 'theme';
 const _savedDrugsKey = 'saved-drugs';
 const _savedPharmaciesKey = 'saved-pharmacies';
 const _isFirstTimeKey = 'is-first-time';
+const _recentPharmacySearchesKey = 'recent-pharmacy-searches';
+const _recentDrugSearchesKey = 'recent-drug-searches';
 
 class SharedPreferencesService {
   late final SharedPreferences _prefs;
@@ -32,4 +34,16 @@ class SharedPreferencesService {
 
   Future<bool> setIsFirstTime(bool value) async =>
       await _prefs.setBool(_isFirstTimeKey, value);
+
+  List<String>? getRecentPharmacySearches() =>
+      _prefs.getStringList(_recentPharmacySearchesKey);
+
+  Future<bool> setRecentPharmacySearches(List<String> value) =>
+      _prefs.setStringList(_recentPharmacySearchesKey, value);
+
+  List<String>? getRecentDrugSearches() =>
+      _prefs.getStringList(_recentDrugSearchesKey);
+
+  Future<bool> setRecentDrugSearches(List<String> value) =>
+      _prefs.setStringList(_recentDrugSearchesKey, value);
 }
