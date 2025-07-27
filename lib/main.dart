@@ -29,11 +29,19 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider<DrugSearchBloc>(
-          create: (_) => DrugSearchBloc(GetIt.I.get<DrugService>()),
+          create:
+              (_) => DrugSearchBloc(
+                GetIt.I.get<DrugService>(),
+                GetIt.I.get<SharedPreferencesService>(),
+              ),
         ),
         BlocProvider<DrugDetailsCubit>(create: (_) => DrugDetailsCubit()),
         BlocProvider<PharmacySearchBloc>(
-          create: (_) => PharmacySearchBloc(GetIt.I.get<PharmacyService>()),
+          create:
+              (_) => PharmacySearchBloc(
+                GetIt.I.get<PharmacyService>(),
+                GetIt.I.get<SharedPreferencesService>(),
+              ),
         ),
         BlocProvider<MainScreenCubit>(
           create:

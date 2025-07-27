@@ -7,7 +7,14 @@ sealed class PharmacySearchState extends Equatable {
   List<Object> get props => [];
 }
 
-final class PharmacySearchInitial extends PharmacySearchState {}
+final class PharmacySearchInitial extends PharmacySearchState {
+  final List<String> recentSearches;
+
+  const PharmacySearchInitial({this.recentSearches = const []});
+
+  @override
+  List<Object> get props => [recentSearches];
+}
 
 final class PharmacySearchLoadInProgress extends PharmacySearchState {}
 

@@ -7,6 +7,8 @@ sealed class PharmacySearchEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class PharmacySearchInitialized extends PharmacySearchEvent {}
+
 class PharmacySearchQueryChanged extends PharmacySearchEvent {
   const PharmacySearchQueryChanged(this.query);
 
