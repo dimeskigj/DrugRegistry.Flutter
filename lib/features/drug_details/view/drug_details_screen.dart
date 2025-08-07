@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drug_registry/core/extensions/issuing_type_extensions.dart';
 import 'package:flutter_drug_registry/core/models/drug.dart';
 import 'package:flutter_drug_registry/widgets/data_point_display.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -191,7 +192,16 @@ class DrugDetailsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             if (drug.manualUrl != null)
               InkWell(
-                onTap: () => launchUrl(drug.manualUrl!),
+                // onTap: () => launchUrl(drug.manualUrl!),
+                onTap:
+                    () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder:
+                            (context) => PdfViewerScreen(
+                              pdfUrl: drug.manualUrl!.toString(),
+                            ),
+                      ),
+                    ),
                 child: Container(
                   margin: defaultInsets.copyWith(top: 10, bottom: 10),
                   child: Row(
@@ -251,6 +261,35 @@ class DrugDetailsScreen extends StatelessWidget {
             const SizedBox(height: 100),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PdfViewerScreen extends StatelessWidget {
+  const PdfViewerScreen({super.key, required this.pdfUrl});
+
+  final String pdfUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('PDF Преглед')),
+      body: PDFView(
+        filePath: pdfUrl,
+        enableSwipe: true,
+        swipeHorizontal: true,
+        autoSpacing: false,
+        pageFling: false,
+        pageSnap: true,
+        defaultPage: 0,
+        fitPolicy: FitPolicy.BOTH,
+        preventLinkNavigation: false, // if true the link is handled in flutter
+        onError: (error) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Error loading PDF: $error')));
+        },
       ),
     );
   }
