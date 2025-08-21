@@ -25,10 +25,10 @@ Welcome to the official repository for the **Drug Registry** mobile app – an i
 
 ## 📸 Screenshots
 
-<img height="384" alt="image" src="https://github.com/user-attachments/assets/2e3c38b5-29e4-43d4-b626-f86c91d82d64" />
-<img height="384" alt="image" src="https://github.com/user-attachments/assets/90a747fe-ca15-4ddd-9689-27e7a2e2f27d" />
-<img height="384" alt="image" src="https://github.com/user-attachments/assets/4c06f940-cbb6-4ab7-8032-940f6fea8981" />
-<img height="384" alt="image" src="https://github.com/user-attachments/assets/a95f80f6-9b48-41f5-a735-c93a06e384c4" />
+<img width="23%" alt="image" src="https://github.com/user-attachments/assets/2e3c38b5-29e4-43d4-b626-f86c91d82d64" />
+<img width="23%" alt="image" src="https://github.com/user-attachments/assets/90a747fe-ca15-4ddd-9689-27e7a2e2f27d" />
+<img width="23%" alt="image" src="https://github.com/user-attachments/assets/4c06f940-cbb6-4ab7-8032-940f6fea8981" />
+<img width="23%" alt="image" src="https://github.com/user-attachments/assets/a95f80f6-9b48-41f5-a735-c93a06e384c4" />
 
 
 ## 📥 Installation
