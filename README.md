@@ -43,27 +43,27 @@ Welcome to the official repository for the **Drug Registry** mobile app – an i
 
 1. Clone the repository:
 
-   \```
+   ```
    git clone https://github.com/dimeskigj/DrugRegistry.Flutter
-   \```
+   ```
 
 2. Navigate to the project directory:
 
-   \```
+   ```
    cd DrugRegistry.Flutter
-   \```
+   ```
 
 3. Install the dependencies:
 
-   \```
+   ```
    flutter pub get
-   \```
+   ```
 
 4. Run the app:
 
-   \```
+   ```
    flutter run
-   \```
+   ```
 
 ---
 
